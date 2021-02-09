@@ -1,6 +1,5 @@
 <p align="center"><img width=50% src="https://github.com/charichu/saonDev/blob/master/frontend/src/assets/logo2.gif?raw=true"></p>
 <p align="center"><img width=30% src="https://github.com/charichu/saonDev/blob/master/frontend/src/assets/DSALogo.gif?raw=true"></p>
-<div align="center>
 
 ## Basic Overview
 
@@ -11,7 +10,7 @@ Hence the name saon "schwarzes auge online"
 
 Documentation is on it´s way... maybe... I am not making any promises...
 
-<p align="center"><img width=95% src="https://i.imgur.com/5S42Lyr.jpg"></p>
+<p align="center"><img width=65% src="https://i.imgur.com/5S42Lyr.jpg"></p>
 
 ## Notes
 #### Example Notes
