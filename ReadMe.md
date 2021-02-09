@@ -1,4 +1,4 @@
-<p align="center"><img width=50% src="https://github.com/charichu/saonDev/blob/master/frontend/src/assets/logo2.gif?raw=true"></p>
+<p align="center"><img width=30% src="https://github.com/charichu/saonDev/blob/master/frontend/src/assets/logo2.gif?raw=true"></p>
 <p align="center"><img width=30% src="https://github.com/charichu/saonDev/blob/master/frontend/src/assets/DSALogo.gif?raw=true"></p>
 <div align="center>
 
@@ -6,6 +6,10 @@
 
 This will be the baseline for a PoC and fun side project. Basically a full CMS, Wiki, Character-, Groupamangement for the P&P tabletop "Das Schwarze Auge"
 Hence the name saon "schwarzes auge online"
+
+## Tech Stack
+
+JavaScript, TypeScript, GraphQL, Express, NodeJs, React, PostgreSQL
 
 ## Documentation
 
