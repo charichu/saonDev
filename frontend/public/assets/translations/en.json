@@ -1,0 +1,15 @@
+{
+    "hello.label": "Hello",
+    "books.label": "Books",
+    "books.title": "List of all TDE Books",
+    "book.isbn": "Optolith-Id",
+    "book.title": "Book Title",
+    "details.label": "Detail View",
+    "edit.label": "Edit",
+    "book.add": "Add Book",
+    "book.description": "Description",
+    "delete.label": "Delete",
+    "book.short": "Short Name",
+    "book.imageURL": "Cover Image URL",
+    "submnit.label": "Submit"
+  }

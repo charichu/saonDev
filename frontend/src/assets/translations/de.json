@@ -1,0 +1,15 @@
+{
+    "hello.label": "Hallo",
+    "books.label": "Bücher",
+    "books.title": "Sammlung aller DSA-Bücher",
+    "book.isbn": "Optolith-Id",
+    "book.title": "Buchtitel",
+    "details.label": "Detailansicht",
+    "edit.label": "Bearbeiten",
+    "book.add": "Buch hinzufügen",
+    "book.description": "Beschreibung",
+    "delete.label": "Löschen",
+    "book.short": "Kurzbezeichnung",
+    "book.imageURL": "Coverbild URL",
+    "submit.label": "Übertragen"
+  }
