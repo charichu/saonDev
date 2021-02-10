@@ -31,10 +31,10 @@ export class BookResolver {
 
     //Create Locale Text
     if (locale.title) {
-      this.createBookLocale(locale.locale, locale.title, titleId);
+     this.createBookLocale(locale.locale, locale.title, id, true, false);
     }
     if (locale.description) {
-      this.createBookLocale(locale.locale, locale.description, descriptionId);
+     this.createBookLocale(locale.locale, locale.description, id, false, true);
     }
     return book;
   }
@@ -61,17 +61,33 @@ export class BookResolver {
   async createBookLocale(
     @Arg("locale") locale: string,
     @Arg("text") text: string,
-    @Arg("bookId", () => Int) bookId: number
+    @Arg("bookId", () => Int) bookId: number,
+    @Arg("isTitle", { defaultValue: false }) isTitle: boolean,
+    @Arg("isDescription", { defaultValue: false }) isDescription: boolean
   ) {
-    const input = {
-      locale: locale,
-      bookid: bookId,
-      text: text,
-    };
-
+    let input = {};
+    
+    if(isTitle){      
+      const titleId = prefixTitle + bookId;      
+      input = {
+        locale: locale,
+        bookId: titleId,
+        text: text,
+      };
+    } else if(isDescription){     
+      const descriptionId = prefixTitle + bookId;      
+      input = {
+        locale: locale,
+        bookId: descriptionId,
+        text: text,
+      };
+    } else {
+      return false
+    }    
     await BookLocale.create(input).save();
     return true;
   }
+  
   @Authorized()
   @Mutation(() => Boolean, { nullable: true })
   async updateBookLocale(
@@ -113,7 +129,9 @@ export class BookResolver {
         title: title!.text,
         short: bookList[i].short,
         description: description!.text,
-        imageURL: bookList[i].imageURL
+        imageURL: bookList[i].imageURL,
+        titleId: bookList[i].titleId,
+        descriptionId: bookList[i].descriptionId,
       };
       books.push(output);
     }
@@ -141,29 +159,55 @@ export class BookResolver {
       title: title!.text,
       short: book!.short,
       description: description!.text,
-      imageURL: book!.imageURL
+      imageURL: book!.imageURL,
+      titleId: book!.titleId,
+      descriptionId: book!.descriptionId,
     };
     return output;
   }
 
   //QUERIES LOCALE
   @Query(() => [BookLocale])
-  async booklocales(@Arg("locale", { defaultValue: "de" }) locale: string) {
+  async booklocales(
+    @Arg("locale", { defaultValue: "de" }) locale: string) {
     return Book.find({ where: { locale: locale } });
   }
 
   @Query(() => BookLocale)
-  async booklocale(@Arg("id") id: number,
-  @Arg("textId", () => Int, {nullable:true})textId: textIdInput) {
+  async booklocale(
+    @Arg("id") id: number,
+    @Arg("locale", { defaultValue: "de" }) locale: string,
+    @Arg("textId", () => Int, {nullable:true})textId: textIdInput) {
     if(textId){
       if(textId.isTitle){
         const id = textId.bookid + prefixTitle;
-        return BookLocale.findOne({ where: { bookId: id } });
+        return BookLocale.findOne({ where: { bookId: id, locale: locale}});
       } else {
         const id = textId.bookid + prefixDescription;
-        return BookLocale.findOne({ where: { bookId: id } });
+        return BookLocale.findOne({ where: { bookId: id, locale: locale}});
       }
     };
     return BookLocale.findOne({ where: { id } });
   }
+  
+  @Query(() => [BookLocale])
+  async bookAllTexts(
+    @Arg("bookId") bookId: number,
+    @Arg("locale", { defaultValue: "de" }) locale: string) {
+      
+      let output = new Array();
+      const titleId = bookId + prefixTitle;
+      const descriptionId = bookId + prefixDescription;
+
+      const titles = await BookLocale.find({ where: { bookId: titleId, locale: locale}});
+      const descriptions = await BookLocale.find({ where: { bookId: descriptionId, locale: locale}});
+
+      for(let i = 0; i > titles.length; i++){
+        output.push(titles[i]);
+      }
+      for(let i = 0; i > descriptions.length; i++){
+        output.push(descriptions[i]);
+      }
+      return output;
+    };
 }

@@ -61,6 +61,12 @@ export class BookOutput {
 
     @Field()
     description: string 
+
+    @Field()
+    titleId: number 
+    
+    @Field()
+    descriptionId: number 
     
     @Field({nullable:true})
     imageURL: string

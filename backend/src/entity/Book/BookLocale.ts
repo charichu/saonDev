@@ -14,9 +14,13 @@ export class BookLocale extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number
     
-    // THIS MEANS TITLE OR DESCRIPTION ID DIFFERENCE IS TITLE STARTS WITH 1 AND DESCRIPTION WITH 2
     @Field( () => Int)
+    @Column()
     bookId: number
+
+    @Field( () => Int)
+    @Column()
+    textId: number
 
     @Field()
     @Column({enum: Locale})
