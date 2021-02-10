@@ -3,7 +3,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import { Link, useHistory, useParams } from "react-router-dom";
-import Loading from "../../components/Loading"
+import { withNamespaces } from 'react-i18next';
+
+function getByBookId(arr, id) {
+
+  for (var i=0, iLen=arr.length; i<iLen; i++) {
+    //eslint-disable-next-line
+    if (arr[i].id == id) return arr[i];
+  }
+}
 
 const GET_BOOK = gql`
 query book($bookId: Int!)
@@ -25,7 +33,7 @@ mutation deleteBook($bookId: Int!)
 }
 `;
 
-const Show = () => { 
+const Show = ({t}) => { 
 
   const {
     getAccessTokenSilently,
@@ -46,76 +54,66 @@ const Show = () => {
 
   const { id } = useParams();
 
-  return (
-    <Query
-        query={GET_BOOK}
-        variables={{ bookId: parseInt(id) }}
-      >
-        {({ loading, error, data }) => {
-          if (loading) return <Loading/>;
-          if (error) return `Error! ${error.message}`;
+  const bookls = JSON.parse(localStorage.getItem('bookls'));
+  const book = getByBookId(bookls, id);
 
-          return (
-            <div className="container text-white">
-              <div className="panel panel-default">
-                <div className="panel-heading">
-                  <h4>
-                        <Link to="/book" className="btn btn-secondary">
-                        this.props.t('books.title')
-                        </Link>
-                  </h4>
-                  <h3 className="panel-title">{data.book.title}</h3>
-                </div>
-                <div className="panel-body">
-                  <dl>
-                    <dt>this.props.t('book.isbn')</dt>
-                    <dd>{data.book.isbn}</dd>
-                    <dt>this.props.t('book.title')</dt>
-                    <dd>{data.book.title}</dd>
-                    <dt>this.props.t('book.description')</dt>
-                    <dd>{data.book.description}</dd>
-                    <dt>this.props.t('book.short')</dt>
-                    <dd>{data.book.short}</dd>
-                    <dt>this.props.t('book.imageURL')</dt>
-                    <dd>{data.book.imageURL}</dd>
-                  </dl>
-                  <Mutation
-                    mutation={DELETE_BOOK}
-                    key={data.book.id}
-                    onError={() => console.log(error)}
-                    onCompleted={() => history.push("/")}
+  return (
+    <div className="container text-white">
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <h4>
+                <Link to="/books" className="btn btn-secondary">
+                {t('books.title')}
+                </Link>
+          </h4>
+          <h3 className="panel-title">{book.title}</h3>
+        </div>
+        <div className="panel-body">
+          <dl>
+            <dt>{t('book.isbn')}:</dt>
+            <dd>{book.isbn}</dd>
+            <dt>{t('book.title')}:</dt>
+            <dd>{book.title}</dd>
+            <dt>{t('book.description')}:</dt>
+            <dd>{book.description}</dd>
+            <dt>{t('book.short')}:</dt>
+            <dd>{book.short}</dd>
+            <dt>{t('book.imageURL')}:</dt>
+            <dd>{book.imageURL}</dd>
+          </dl>
+          <Mutation
+            mutation={DELETE_BOOK}
+            key={book.id}
+            onCompleted={() => history.push("/")}
+          >
+            {(deleteBook, { loading, error }) => (
+              <div>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    deleteBook({ variables: { bookId: parseInt(id) } });
+                  }}
+                >
+                  <Link
+                    to={{pathname: `/book/edit/${book.id}`, state: {book}}}
+                    className="btn btn-secondary"
                   >
-                    {(deleteBook, { loading, error }) => (
-                      <div>
-                        <form
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            deleteBook({ variables: { bookId: parseInt(id) } });
-                          }}
-                        >
-                          <Link
-                            to={`/book/edit/${parseInt(id)}`}
-                            className="btn btn-secondary"
-                          >
-                            this.props.t('edit.label')
-                          </Link>
-                          &nbsp;
-                          <button type="submit" className="btn btn-danger">
-                          this.props.t('delete.label')
-                          </button>
-                        </form>
-                        {loading && <p>Loading...</p>}
-                        {error && <p>Error : ${error.message}</p>}
-                      </div>
-                    )}
-                  </Mutation>
-                </div>
+                    {t('edit.label')}
+                  </Link>
+                  &nbsp;
+                  <button type="submit" className="btn btn-danger">
+                  {t('delete.label')}
+                  </button>
+                </form>
+                {loading && <p>Loading...</p>}
+                {error && <p>Error : ${error.message}</p>}
               </div>
-            </div>
-          );
-        }}
-      </Query>
+            )}
+          </Mutation>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Show;
+export default withNamespaces()(Show);

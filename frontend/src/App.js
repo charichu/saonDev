@@ -11,7 +11,8 @@ import Blog from "./views/general/Blog";
 import Profile from "./views/general/Profile";
 import ExternalApi from "./views/general/ExternalApi";
 import Books from "./views/books/Books";
-import Show from "./views/books/Show";
+import ShowBook from "./views/books/Show";
+import EditBook from "./views/books/EditBook";
 import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
 import { withNamespaces } from 'react-i18next';
@@ -46,7 +47,8 @@ const App = ({t}) => {
             <Route path="/roadmap" component={Roadmap} />
             <Route path="/blog" component={Blog} />
             <Route path="/books" component={Books} />
-            <Route path='/book/show/:id' component={Show} />
+            <Route path='/book/show/:id' component={ShowBook} />
+            <Route path='/book/edit/:id' component={EditBook} />
           </Switch>
         </Container>
         <Footer />

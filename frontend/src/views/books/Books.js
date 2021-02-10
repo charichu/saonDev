@@ -12,6 +12,10 @@ const GET_BOOKS = gql`
       id
       title
       isbn
+      short
+      titleId
+      descriptionId
+      description
       imageURL
     }
   }
@@ -37,7 +41,7 @@ const Books = ({t}) => {
         {({ loading, error, data }) => {
           if (loading) return <Loading />;
           if (error) return `Error! ${error.message}`;
-
+          localStorage.setItem("bookls", JSON.stringify(data.bookls));
           return (
             <div className="container bg-dark text-white">
               <div className="panel panel-default">
@@ -63,7 +67,7 @@ const Books = ({t}) => {
                           <td>{book.isbn}</td>
                           <td><Link to={`/book/show/${book.id}`}>{book.title}</Link></td>
                           <td><Link to={`/book/show/${book.id}`} className="btn btn-secondary">{t('details.label')}</Link></td>
-                          <td><Link to={`/book/edit/${book.id}`} className="btn btn-primary">{t('edit.label')}</Link></td>
+                          <td><Link to={{pathname: `/book/edit/${book.id}`, state: {titleId: book.titleId, descriptionId: book.descriptionId}}} className="btn btn-primary">{t('edit.label')}</Link></td>
                         </tr>
                       ))}
                     </tbody>
