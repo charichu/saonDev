@@ -1,37 +1,30 @@
-## Welcome to GitHub Pages
+## Welcome to saon2
 
-You can use the [editor on GitHub](https://github.com/charichu/saonDev/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Here I will post the upcoming features and some dev updates. Feel free to contact me via GitHub. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Roadmap
 
-### Markdown
+The list are roughly sorted by priority. Sadly I cannot give any timeframes on the issues.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Features
+- Edit and Add Books
+- Multilanguage Support
+- New DataTypes
+- Randomizers Loot, NPCs
+- Character Viewer
+- Basic character Creation
+- Skill Checks
+- Save and share NPCs -/Collection
+- Shared Inventory
+- Battle Monitor
+- Shared Notes / Posts
+- Campaign / Group Management
+- Discord Integration
+- Maps and other visual notes
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/charichu/saonDev/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### Technologies
+- Jest Test
+- RBCA Support on DB via Auth0
+- GitHub Actions for CI/CD
+- Dockerize
+- Major Redesign
