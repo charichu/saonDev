@@ -66,24 +66,23 @@ export class BookResolver {
     @Arg("isDescription", { defaultValue: false }) isDescription: boolean
   ) {
     let input = {};
-    
+    let textId;
+
     if(isTitle){      
-      const titleId = prefixTitle + bookId;      
-      input = {
-        locale: locale,
-        bookId: titleId,
-        text: text,
-      };
+      textId = prefixTitle + bookId; 
     } else if(isDescription){     
-      const descriptionId = prefixTitle + bookId;      
-      input = {
-        locale: locale,
-        bookId: descriptionId,
-        text: text,
-      };
+      textId = prefixDescription + bookId;     
     } else {
       return false
-    }    
+    }
+    
+    input = {
+      locale: locale,
+      bookId: bookId,
+      text: text,
+      textId: textId
+    };
+
     await BookLocale.create(input).save();
     return true;
   }
@@ -112,23 +111,32 @@ export class BookResolver {
 
   @Query(() => [BookOutput])
   async bookls(@Arg("locale", { defaultValue: "de" }) locale: string) {
+    
     const bookList = await Book.find().then(
       (response) => response);
-    let books = new Array();
+    
+    let books = new Array(); 
+    let title = "";
+    let description = "";
+
     for(let i = 0; i < bookList.length; i++){
-      //TODO use method below for this! booklocale!!
-      const title = await BookLocale.findOne({where: { bookid: bookList[i].id + prefixTitle,locale: locale },
-      });
-      const description = await BookLocale.findOne({
-        where: { bookId: bookList[i].id + prefixDescription, locale: locale },
-      });
+      
+    const texts = await BookLocale.find({ where: {bookId: bookList[i].id, locale: locale}});
+
+    if(texts[0].textId < prefixDescription){
+      title = texts[0].text;
+      description = texts[1].text;
+    }else {
+      title = texts[1].text;
+      description = texts[0].text;
+    }
 
       const output: BookOutput = {
         id: bookList[i].id,
         isbn: bookList[i].isbn,
-        title: title!.text,
+        title: title,
         short: bookList[i].short,
-        description: description!.text,
+        description: description,
         imageURL: bookList[i].imageURL,
         titleId: bookList[i].titleId,
         descriptionId: bookList[i].descriptionId,
@@ -147,10 +155,10 @@ export class BookResolver {
       (response) => response
     );
     const title = await BookLocale.findOne({
-      where: { titleId: id + prefixTitle,  },
+      where: { textId: book!.titleId, locale: locale },
     });
     const description = await BookLocale.findOne({
-      where: { titleId: id + prefixDescription, locale: locale },
+      where: { textId: book!.descriptionId, locale: locale },
     });
 
     const output: BookOutput = {
@@ -196,16 +204,16 @@ export class BookResolver {
     @Arg("locale", { defaultValue: "de" }) locale: string) {
       
       let output = new Array();
-      const titleId = bookId + prefixTitle;
+      const titleId       = bookId + prefixTitle;
       const descriptionId = bookId + prefixDescription;
 
-      const titles = await BookLocale.find({ where: { bookId: titleId, locale: locale}});
-      const descriptions = await BookLocale.find({ where: { bookId: descriptionId, locale: locale}});
+      const titles        = await BookLocale.find({ where: { textId: titleId, locale: locale}});
+      const descriptions  = await BookLocale.find({ where: { textId: descriptionId, locale: locale}});
 
-      for(let i = 0; i > titles.length; i++){
+      for(let i = 0; i < titles.length; i++){
         output.push(titles[i]);
       }
-      for(let i = 0; i > descriptions.length; i++){
+      for(let i = 0; i < descriptions.length; i++){
         output.push(descriptions[i]);
       }
       return output;

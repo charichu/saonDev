@@ -43,7 +43,7 @@ const EditBook = () => {
   
   const { id } = useParams();
 
-  const { titleId, descriptionId } = useState();
+  const { titleId } = useState();
   localStorage.setItem('titleId', titleId)
 
   let isbn;

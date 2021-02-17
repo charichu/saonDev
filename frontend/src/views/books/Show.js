@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import gql from "graphql-tag";
-import { Query, Mutation } from "react-apollo";
+import { Mutation } from "react-apollo";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { withNamespaces } from 'react-i18next';
 
@@ -12,19 +12,6 @@ function getByBookId(arr, id) {
     if (arr[i].id == id) return arr[i];
   }
 }
-
-const GET_BOOK = gql`
-query book($bookId: Int!)
-{
-    book(id: $bookId) {
-      short
-      isbn
-      title
-      description
-      imageURL
-    }
-}
-`;
 
 const DELETE_BOOK = gql`
 mutation deleteBook($bookId: Int!) 
