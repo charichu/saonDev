@@ -37,8 +37,23 @@ credentialsRequired: false
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: [BookResolver], 
-      authChecker: ({ context: {user} }) => {
-        return !!user;
+      authChecker: ({ context: {user} }, roles) => {
+        // if `@Authorized()`, check only if user exists
+        if(roles.length === 0){
+          return user !== undefined;
+        }
+
+        // there are some roles defined now
+        if (!user) {
+          // and if no user, restrict access
+          return false;
+        }        
+        // grant access if the roles overlap
+        if (user.permissions.some((role: any) => roles.includes(role))) {          
+          return true;
+        }
+        // no roles matched, restrict access
+        return false;
       }, 
       authMode: "error",
     }),

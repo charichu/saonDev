@@ -17,7 +17,7 @@ const prefixDescription = 200000;
 export class BookResolver {
   
   //MUTATIONS
-  @Authorized()
+  @Authorized("ADMIN")
   @Mutation(() => Book, { nullable: true })
   async createBook(
     @Arg("options") options: BookInput,
@@ -39,7 +39,7 @@ export class BookResolver {
     return book;
   }
 
-  @Authorized()
+  @Authorized("ADMIN")
   @Mutation(() => Boolean, { nullable: true })
   async updateBook(
     @Arg("id", () => Int) id: number,
@@ -49,14 +49,14 @@ export class BookResolver {
     return true;
   }
 
-  @Authorized()
+  @Authorized("ADMIN")
   @Mutation(() => Boolean, { nullable: true })
   async deleteBook(@Arg("id", () => Int) id: number) {
     await Book.delete({ id });
     return true;
   }
   // MUTATION LOCALE
-  @Authorized()
+  @Authorized("ADMIN")
   @Mutation(() => Boolean, { nullable: true })
   async createBookLocale(
     @Arg("locale") locale: string,
@@ -87,7 +87,7 @@ export class BookResolver {
     return true;
   }
   
-  @Authorized()
+  @Authorized("ADMIN")
   @Mutation(() => Boolean, { nullable: true })
   async updateBookLocale(
     @Arg("id", () => Int) id: number,
@@ -97,7 +97,7 @@ export class BookResolver {
     return true;
   }; 
   //TODO
-  @Authorized()
+  @Authorized("ADMIN")
   @Mutation(() => Boolean, { nullable: true })
   async updateTextByIdAndLocale(
     @Arg("textId", () => Int) textId: number,
@@ -110,7 +110,7 @@ export class BookResolver {
   };
 
 
-  @Authorized()
+  @Authorized("ADMIN")
   @Mutation(() => Boolean, { nullable: true })
   async deleteBookLocale(@Arg("id", () => Int) id: number) {
     await BookLocale.delete({ id });

@@ -29,7 +29,7 @@ const CreateBook = () => {
   const history = useHistory(); 
   
   //Variables for the form field
-  let isbn, title, description, locale, image, short;
+  let isbn, title, description, locale, image, short, isCore;
 
   return (
     <Mutation
@@ -54,32 +54,41 @@ const CreateBook = () => {
         </p>
             <form
                 onSubmit={(e) => {
-                    //TO-DO Add more elegant validation and give user output better use setStats and onChange for forms
-                if(!title.isEmpty() && !description.isEmpty() && !image.isEmpty() && !short.isEmpty() && !isbn.isEmpty() && !locale.isEmpty()){
-                const options = {
+                
+            //TO-DO Add validation and give user output better use setStats and onChange for forms
+                
+            if((locale.value === "de" || locale.value === "en") 
+                && isbn.value !== "" && short.value !== "" && image.value !== "" 
+                && title.value !== ""&& description.value !== ""){
+                
+                    let coreInput = false
+                    if(isCore.checked === true){coreInput = true;}
+
+                    const options = {
                     isbn: isbn.value,
                     short: short.value,
                     imageURL: image.value,
-                };
+                    isCore: coreInput
+                    };
 
-                const localeInput = {
-                    locale: locale.value,
-                    title: title.value,
-                    description: description.value,
-                }
+                    const localeInput = {
+                        locale: locale.value,
+                        title: title.value,
+                        description: description.value,
+                    }
 
-                e.preventDefault();
+                    e.preventDefault();
 
-                createBook({
-                    variables: { options, localeInput },
-                  });
-                
-                isbn.value = "";
-                short.value = "";
-                image.value = "";
-                locale.value = "";
-                title.value = "";
-                description.value = "";
+                    createBook({
+                        variables: { options, localeInput },
+                    });
+                    
+                    isbn.value = "";
+                    short.value = "";
+                    image.value = "";
+                    locale.value = "";
+                    title.value = "";
+                    description.value = "";
 
                 }}}
             >
@@ -92,7 +101,7 @@ const CreateBook = () => {
                 ref={(node) => {
                 isbn = node;
                 }}
-                placeholder="ISBN"
+                defaultValue="ISBN"
             />
             </div>
             <div className="form-group">
@@ -104,7 +113,7 @@ const CreateBook = () => {
                 ref={(node) => {
                 short = node;
                 }}
-                placeholder="image"
+                defaultValue="short"
             />
             </div>
             <div className="form-group">
@@ -116,7 +125,7 @@ const CreateBook = () => {
                 ref={(node) => {
                 image = node;
                 }}
-                placeholder="image"
+                defaultValue="image"
             />
             </div>
                 <div className="form-group">
@@ -128,7 +137,7 @@ const CreateBook = () => {
                     ref={(node) => {
                         locale = node;
                     }}
-                    placeholder="locale"
+                    defaultValue="de"
                 />
                 </div>
                 <div className="form-group">
@@ -140,7 +149,7 @@ const CreateBook = () => {
                     ref={(node) => {
                         title = node;
                     }}
-                    placeholder="title"
+                    defaultValue="title"
                 />
                 </div>
                 <div className="form-group">
@@ -152,7 +161,19 @@ const CreateBook = () => {
                     ref={(node) => {
                         description = node;
                     }}
-                    placeholder="description"
+                    defaultValue="description"
+                />
+                </div>
+                <div className="form-group">
+                <label htmlFor="isCore">Belongs to Core Rules:</label>
+                <input
+                    type="checkbox"
+                    classname="custom-control-input"
+                    name="isCore"
+                    ref={(node) => {
+                        isCore = node;
+                    }}
+                    for="isCore"
                 />
                 </div>
                 <button type="submit" className="btn btn-secondary">

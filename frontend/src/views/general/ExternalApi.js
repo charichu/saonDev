@@ -63,7 +63,7 @@ export const ExternalApiComponent = () => {
       const response = await fetch(`${apiOrigin}/api/external`, {
         headers: {
           Authorization: `Bearer ${token}`,
-        },
+        }
       });
 
       const responseData = await response.json();
