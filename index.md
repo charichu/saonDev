@@ -1,13 +1,17 @@
 ## Welcome to saon2
 
-Here I will post the upcoming features and some dev updates. Feel free to contact me via GitHub. 
+Here I will post the upcoming features and some dev updates. Feel free to contact me via GitHub.
+
+## Newest Features
+- Edit and Add Books
 
 ## Roadmap
 
 The list are roughly sorted by priority. Sadly I cannot give any timeframes on the issues.
 
 ### Upcoming Features 
-- Edit and Add Books
+- Edit and Add Books (DONE)
+- RBCA on Book CRUDS
 - Multilanguage Support
 - New DataTypes
 - Randomizers Loot, NPCs
