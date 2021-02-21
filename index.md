@@ -2,6 +2,7 @@
 
 Here I will post the upcoming features and some dev updates. Feel free to contact me via GitHub.
 
+
 ## Newest Features
 - Edit and Add Books
 - RBCA on Book CRUDs
@@ -9,12 +10,13 @@ Here I will post the upcoming features and some dev updates. Feel free to contac
 - - role needs to be set manually in the Auth0 Dashboard for each User
 - - Only Role: ADMIN, for all CUDs 
 
+
+
 ## Roadmap
 
 The list are roughly sorted by priority. Sadly I cannot give any timeframes on the issues.
 
 ### Upcoming Features 
-- Edit and Add Books (DONE)
 - Multilanguage Support
 - New DataTypes
 - Randomizers Loot, NPCs
