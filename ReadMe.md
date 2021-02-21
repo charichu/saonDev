@@ -3,8 +3,10 @@
 
 ## Basic Overview
 
-This will be the baseline for a PoC and fun side project. Basically a full CMS, Wiki, Character-, Groupamangement for the P&P tabletop "Das Schwarze Auge"
+This will be the baseline for a PoC and fun side project. Basically a full CMS, Wiki, Character-, Groupmangement for the P&P tabletop "Das Schwarze Auge"
 Hence the name saon "schwarzes auge online"
+
+Check the github pages for the <a href="https://charichu.github.io/saonDev/"> Roadmap</a> of upcoming features and freshly implemented features.
 
 ## Tech Stack
 
