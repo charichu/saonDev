@@ -6,9 +6,9 @@ Here I will post the upcoming features and some dev updates. Feel free to contac
 ## Newest Features
 - Edit and Add Books
 - RBCA on Book CRUDs
-- - Read is still without Auth
-- - role needs to be set manually in the Auth0 Dashboard for each User
-- - Only Role: ADMIN, for all CUDs 
+  - Read is still without Auth
+  - role needs to be set manually in the Auth0 Dashboard for each User
+  - Only Role: ADMIN, for all CUDs 
 
 
 
