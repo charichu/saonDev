@@ -50,7 +50,7 @@ const Show = ({t}) => {
         <div className="panel-heading">
           <h4>
                 <Link to="/books" className="btn btn-secondary">
-                {t('books.title')}
+                {t('back.label')}
                 </Link>
           </h4>
           <h3 className="panel-title">{book.title}</h3>

@@ -20,6 +20,12 @@ export class BookInput {
 export class BookUpdateInput {
     @Field(() => String, {nullable: true})
     isbn?: string;
+
+    @Field(() => String, {nullable: true})
+    short?: string;
+
+    @Field(() => String, {nullable: true})
+    imageURL?: string;
 }
 
 @InputType()

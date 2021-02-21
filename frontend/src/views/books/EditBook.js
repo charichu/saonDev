@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import { Link, useHistory, useParams } from "react-router-dom";
@@ -14,6 +14,8 @@ query book($bookId: Int!)
       titleId
       descriptionId
       imageURL
+      title
+      description
     }
 }
 `;
@@ -21,6 +23,12 @@ query book($bookId: Int!)
 const UPDATE_BOOK = gql`
   mutation updateBook($bookId: Int!, $input: BookUpdateInput!) {
     updateBook(id: $bookId, input: $input)
+  }
+`;
+
+const UPDATE_LOCALE = gql`
+  mutation updateTextByIdAndLocale($textId: Int!, $locale: String!, $text: String!){
+    updateTextByIdAndLocale(textId: $textId, locale: $locale, text: $text)
   }
 `;
 
@@ -46,7 +54,8 @@ const EditBook = () => {
   const { titleId } = useState();
   localStorage.setItem('titleId', titleId)
 
-  let isbn;
+  //Variables for the form field
+  let isbn, title, description, locale, image, short;
 
   return (
     <Query
@@ -58,62 +67,196 @@ const EditBook = () => {
       if (error) return `Error! ${error.message}`;
 
       return (
-        <Mutation
-          mutation={UPDATE_BOOK}
-          key={data.book.id}
-          onError={() => console.log(error)}
-          onCompleted={() => history.push(`/books`)}
-        >
-          {(updateBook, { loading, error }) => (
-            <div className="container text-white">
-              <div className="panel panel-default">
-                <div className="panel-heading">
-                  <h3 className="panel-title">EDIT BOOK</h3>
+        <div>
+          {/* UPDATE GENERAL BOOK INFORMATION  */}
+          <Mutation
+            mutation={UPDATE_BOOK}
+            key={data.book.id}
+            onError={() => console.log(error)}
+            onCompleted={() => history.push(`/books`)}
+          >
+            {(updateBook, { loading, error }) => (
+              <div className="container text-white">
+                <div className="panel panel-default">
+                  <div className="panel-heading">
+                    <h3 className="panel-title">EDIT BOOK</h3>
+                  </div>
+                  <div className="panel-body">
+                    <h4>
+                      <Link to={`/book/show/${id}`} className="btn btn-secondary">
+                        Back
+                      </Link>
+                    </h4>
+
+                    {/* first form to change basic without locales  */}
+
+                    <form
+                      onSubmit={(e) => {
+                        const input = {
+                          isbn: isbn.value,
+                          short: short.value,
+                          imageURL: image.value
+                        }
+
+                        console.log(input);
+
+                        e.preventDefault();
+                        updateBook({
+                          variables: { bookId: parseInt(id), input },
+                        });
+                        isbn.value = "";
+                        short.value = "";
+                        image.value = "";
+                      }}
+                    >
+                      <div className="form-group">
+                        <label htmlFor="isbn">ISBN:</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="isbn"
+                          ref={(node) => {
+                            isbn = node;
+                          }}
+                          placeholder="ISBN"
+                          defaultValue={data.book.isbn}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="short">Shortname:</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="short"
+                          ref={(node) => {
+                            short = node;
+                          }}
+                          placeholder="image"
+                          defaultValue={data.book.short}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="image">Image URL:</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="image"
+                          ref={(node) => {
+                            image = node;
+                          }}
+                          placeholder="image"
+                          defaultValue={data.book.imageURL}
+                        />
+                      </div>
+                      <button type="submit" className="btn btn-secondary">
+                        Submit
+                      </button>
+                    </form>
+                    {loading && <p>Loading...</p>}
+                    {error && <p>Error : ${error.message}</p>}
+                  </div>
                 </div>
-                <div className="panel-body">
-                  <h4>
-                    <Link to={`/book/show/${id}`} className="btn btn-secondary">
-                      Back
-                    </Link>
-                  </h4>
+              </div>
+            )}
+          </Mutation>
+          <br/>
+          {/* UPDATE LOCALE TEXT  */}
+          <Mutation
+            mutation={UPDATE_LOCALE}
+            key={data.book.id}
+            onError={() => console.log(error)}
+            onCompleted={() => history.push(`/books`)}
+          >
+            {(updateTextByIdAndLocale, { loading, error }) => (
+              <div className="container text-white">
+                <div className="panel panel-default">
+                  <div className="panel-body">
+                    <h4>
+                      Edit Texts
+                    </h4>
+                    <p> Use only de and en for locales! </p>
+                  {/* Second form for editing locales  */}
+
                   <form
                     onSubmit={(e) => {
-                      const input = {isbn: isbn.value};  
+                        
                       e.preventDefault();
-                      updateBook({
-                        variables: { bookId: parseInt(id), input },
-                      });
-                      isbn.value = "";
+                      //NEEDS TO BE CONTROLLED DURING INPUT JUST DURING ALPHA PHASE
+                      if(locale.value !== 'de' || locale.value !== 'en'){
+                        //TODO THROW ERROR FOR END USER
+                      } 
+                      if(title.value && title.value !== data.book.title){                        
+                        updateTextByIdAndLocale({
+                          variables: { textId: parseInt(data.book.titleId), locale: locale.value, text: title.value },
+                        });
+                      }
+                      if(description.value && description.value !== data.book.description){                        
+                        updateTextByIdAndLocale({
+                          variables: { textId: parseInt(data.book.descriptionId), locale: locale.value, text: description.value },
+                        });
+                      }
+                      locale.value = "";
+                      title.value = "";
+                      description.value = "";
                     }}
                   >
                     <div className="form-group">
-                      <label htmlFor="isbn">ISBN:</label>
+                      <label htmlFor="locale">Locale:</label>
                       <input
                         type="text"
                         className="form-control"
-                        name="isbn"
+                        name="locale"
                         ref={(node) => {
-                          isbn = node;
+                          locale = node;
                         }}
-                        placeholder="ISBN"
-                        defaultValue={data.book.isbn}
+                        placeholder="de"
+                        defaultValue={data.book.locale}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="title">Title:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="Title"
+                        ref={(node) => {
+                          title = node;
+                        }}
+                        placeholder="Title"
+                        defaultValue={data.book.title}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="description">Description:</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="description"
+                        ref={(node) => {
+                          description = node;
+                        }}
+                        placeholder="description"
+                        defaultValue={data.book.description}
                       />
                     </div>
                     <button type="submit" className="btn btn-secondary">
                       Submit
                     </button>
                   </form>
-                  {loading && <p>Loading...</p>}
-                  {error && <p>Error : ${error.message}</p>}
+                    {loading && <p>Loading...</p>}
+                    {error && <p>Error : ${error.message}</p>}
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </Mutation>
+            )}
+          </Mutation>
+        </div>
       );
     }}
   </Query>
   );
 };
 
-export default EditBook;
+export default withAuthenticationRequired(EditBook, {
+  onRedirecting: () => <Loading />,
+});

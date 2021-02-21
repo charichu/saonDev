@@ -25,6 +25,7 @@ const Books = ({t}) => {
 
   const {
     getAccessTokenSilently,
+    isAuthenticated,
   } = useAuth0();
 
   const setToken = async () => {
@@ -45,12 +46,16 @@ const Books = ({t}) => {
           return (
             <div className="container bg-dark text-white">
               <div className="panel panel-default">
+                {/* Showing Button for adding books if logged in */}
                 <div className="panel-heading">
                   <h3 className="panel-title">{t('books.title')}</h3>
-                  <h4>
-                    <Link to="/book/create" className="btn btn-secondary">{t('book.add')}</Link>
-                  </h4>
+                  {isAuthenticated && (
+                    <h4>
+                      <Link to="/book/create" className="btn btn-secondary">{t('book.add')}</Link>
+                    </h4>
+                  )}
                 </div>
+                <br/>
                 <div className="panel-body">
                   <table className="table table-dark">
                     <thead>
@@ -58,7 +63,7 @@ const Books = ({t}) => {
                         <th>{t('book.isbn')}</th>
                         <th>{t('book.title')}</th>
                         <th>{t('details.label')}</th>
-                        <th>{t('edit.label')}</th>
+                        {isAuthenticated && (<th>{t('edit.label')}</th>)}
                       </tr>
                     </thead>
                     <tbody>
@@ -67,7 +72,9 @@ const Books = ({t}) => {
                           <td>{book.isbn}</td>
                           <td><Link to={`/book/show/${book.id}`}>{book.title}</Link></td>
                           <td><Link to={`/book/show/${book.id}`} className="btn btn-secondary">{t('details.label')}</Link></td>
-                          <td><Link to={{pathname: `/book/edit/${book.id}`, state: {titleId: book.titleId, descriptionId: book.descriptionId}}} className="btn btn-primary">{t('edit.label')}</Link></td>
+                          {isAuthenticated && (
+                            <td><Link to={{pathname: `/book/edit/${book.id}`, state: {titleId: book.titleId, descriptionId: book.descriptionId}}} className="btn btn-primary">{t('edit.label')}</Link></td>
+                          )}
                         </tr>
                       ))}
                     </tbody>

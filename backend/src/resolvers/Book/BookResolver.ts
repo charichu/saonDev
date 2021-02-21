@@ -10,7 +10,7 @@ import {
 } from "./BookTypes";
 
 //Prefix for translationtable
-const prefixTitle = 100000;
+const prefixTitle       = 100000;
 const prefixDescription = 200000;
 
 @Resolver()
@@ -95,7 +95,20 @@ export class BookResolver {
   ){
     await BookLocale.update({id}, {text});
     return true;
+  }; 
+  //TODO
+  @Authorized()
+  @Mutation(() => Boolean, { nullable: true })
+  async updateTextByIdAndLocale(
+    @Arg("textId", () => Int) textId: number,
+    @Arg("text") text: string,
+    @Arg("locale", { defaultValue: "de" }) locale: string
+  ){
+    
+    await BookLocale.update({textId, locale}, {text});
+    return true;
   };
+
 
   @Authorized()
   @Mutation(() => Boolean, { nullable: true })

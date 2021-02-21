@@ -13,6 +13,7 @@ import ExternalApi from "./views/general/ExternalApi";
 import Books from "./views/books/Books";
 import ShowBook from "./views/books/Show";
 import EditBook from "./views/books/EditBook";
+import CreateBook from "./views/books/AddBook";
 import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
 import { withNamespaces } from 'react-i18next';
@@ -49,6 +50,7 @@ const App = ({t}) => {
             <Route path="/books" component={Books} />
             <Route path='/book/show/:id' component={ShowBook} />
             <Route path='/book/edit/:id' component={EditBook} />
+            <Route path='/book/create' component={CreateBook} />
           </Switch>
         </Container>
         <Footer />
