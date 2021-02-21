@@ -4,6 +4,10 @@ Here I will post the upcoming features and some dev updates. Feel free to contac
 
 ## Newest Features
 - Edit and Add Books
+- RBCA on Book CRUDs
+- - Read is still without Auth
+- - role needs to be set manually in the Auth0 Dashboard for each User
+- - Only Role: ADMIN, for all CUDs 
 
 ## Roadmap
 
@@ -11,7 +15,6 @@ The list are roughly sorted by priority. Sadly I cannot give any timeframes on t
 
 ### Upcoming Features 
 - Edit and Add Books (DONE)
-- RBCA on Book CRUDS
 - Multilanguage Support
 - New DataTypes
 - Randomizers Loot, NPCs
@@ -28,7 +31,6 @@ The list are roughly sorted by priority. Sadly I cannot give any timeframes on t
 
 ### Technologies to implement
 - Jest Test
-- RBCA Support on DB via Auth0
 - GitHub Actions for CI/CD
 - Dockerize
 - Major Redesign
