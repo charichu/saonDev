@@ -6,7 +6,6 @@ import Loading from "./components/Loading";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Home from "./views/general/Home";
-import Roadmap from "./views/general/Roadmap";
 import Blog from "./views/general/Blog";
 import Profile from "./views/general/Profile";
 import ExternalApi from "./views/general/ExternalApi";
@@ -45,7 +44,6 @@ const App = ({t}) => {
             <Route path="/" exact component={Home} />
             <Route path="/profile" component={Profile} />
             <Route path="/external-api" component={ExternalApi} />
-            <Route path="/roadmap" component={Roadmap} />
             <Route path="/blog" component={Blog} />
             <Route path="/books" component={Books} />
             <Route path='/book/show/:id' component={ShowBook} />

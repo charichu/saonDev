@@ -15,6 +15,10 @@ const Hero = ({t}) => (
       This is a PoC application to access an GraphQL Backend which will hold a complete database for all things "Das Schwarze Auge". 
       <br/>
       Additionally the API and this frontend could be directly used as a CMS. The access is secured by Auth0.
+      <br/>
+      <br/>
+      For more information about the upcoming changes visit the 
+      <a href="https://charichu.github.io/saonDev/"> Roadmap</a>
     </p>
   </div>
 );

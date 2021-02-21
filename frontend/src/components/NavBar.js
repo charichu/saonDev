@@ -70,16 +70,6 @@ const NavBar = () => {
                   </NavLink>
                 </NavItem>
               )}
-              <NavItem>
-                <NavLink
-                  tag={RouterNavLink}
-                  to="/roadmap"
-                  exact
-                  activeClassName="router-link-exact-active"
-                >
-                  Roadmap
-                </NavLink>
-              </NavItem>
                 <NavItem>
                   <NavLink
                     tag={RouterNavLink}
