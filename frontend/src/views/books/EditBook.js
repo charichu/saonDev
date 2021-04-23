@@ -3,7 +3,8 @@ import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
 import { Link, useHistory, useParams } from "react-router-dom";
-import Loading from "../../components/Loading"
+import Loading from "../../components/Loading";
+import { withNamespaces } from 'react-i18next';
 
 const GET_BOOK = gql`
 query book($bookId: Int!)
@@ -32,7 +33,7 @@ const UPDATE_LOCALE = gql`
   }
 `;
 
-const EditBook = () => { 
+const EditBook = ({t}) => { 
 
   const {
     getAccessTokenSilently,
@@ -79,12 +80,12 @@ const EditBook = () => {
               <div className="container text-white">
                 <div className="panel panel-default">
                   <div className="panel-heading">
-                    <h3 className="panel-title">EDIT BOOK</h3>
+                    <h3 className="panel-title">{t('books.edit')}</h3>
                   </div>
                   <div className="panel-body">
                     <h4>
                       <Link to={`/book/show/${id}`} className="btn btn-secondary">
-                        Back
+                      {t('back.label')}
                       </Link>
                     </h4>
 
@@ -110,7 +111,7 @@ const EditBook = () => {
                       }}
                     >
                       <div className="form-group">
-                        <label htmlFor="isbn">ISBN:</label>
+                        <label htmlFor="isbn">{t('books.isbn')}:</label>
                         <input
                           type="text"
                           className="form-control"
@@ -123,7 +124,7 @@ const EditBook = () => {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="short">Shortname:</label>
+                        <label htmlFor="short">{t('books.shortname')}:</label>
                         <input
                           type="text"
                           className="form-control"
@@ -136,7 +137,7 @@ const EditBook = () => {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="image">Image URL:</label>
+                        <label htmlFor="image">{t('books.imageURL')}:</label>
                         <input
                           type="text"
                           className="form-control"
@@ -149,7 +150,7 @@ const EditBook = () => {
                         />
                       </div>
                       <button type="submit" className="btn btn-secondary">
-                        Submit
+                      {t('submit.label')}
                       </button>
                     </form>
                     {loading && <p>Loading...</p>}
@@ -172,9 +173,9 @@ const EditBook = () => {
                 <div className="panel panel-default">
                   <div className="panel-body">
                     <h4>
-                      Edit Texts
+                      {t('books.edit.texts')}
                     </h4>
-                    <p> Use only de and en for locales! </p>
+                    <p> {t('books.edit.info')} </p>
                   {/* Second form for editing locales  */}
 
                   <form
@@ -201,7 +202,7 @@ const EditBook = () => {
                     }}
                   >
                     <div className="form-group">
-                      <label htmlFor="locale">Locale:</label>
+                      <label htmlFor="locale">{t('locale')}:</label>
                       <input
                         type="text"
                         className="form-control"
@@ -214,7 +215,7 @@ const EditBook = () => {
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="title">Title:</label>
+                      <label htmlFor="title">{t('books.title')}:</label>
                       <input
                         type="text"
                         className="form-control"
@@ -227,7 +228,7 @@ const EditBook = () => {
                       />
                     </div>
                     <div className="form-group">
-                      <label htmlFor="description">Description:</label>
+                      <label htmlFor="description">{t('books.description')}:</label>
                       <input
                         type="text"
                         className="form-control"
@@ -240,7 +241,7 @@ const EditBook = () => {
                       />
                     </div>
                     <button type="submit" className="btn btn-secondary">
-                      Submit
+                    {t('submit.label')}
                     </button>
                   </form>
                     {loading && <p>Loading...</p>}
@@ -257,6 +258,6 @@ const EditBook = () => {
   );
 };
 
-export default withAuthenticationRequired(EditBook, {
+export default withNamespaces()(withAuthenticationRequired(EditBook, {
   onRedirecting: () => <Loading />,
-});
+}));

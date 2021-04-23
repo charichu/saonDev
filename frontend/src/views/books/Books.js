@@ -48,10 +48,10 @@ const Books = ({t}) => {
               <div className="panel panel-default">
                 {/* Showing Button for adding books if logged in */}
                 <div className="panel-heading">
-                  <h3 className="panel-title">{t('books.title')}</h3>
+                  <h3 className="panel-title">{t('books.list')}</h3>
                   {isAuthenticated && (
                     <h4>
-                      <Link to="/book/create" className="btn btn-secondary">{t('book.add')}</Link>
+                      <Link to="/book/create" className="btn btn-secondary">{t('books.add')}</Link>
                     </h4>
                   )}
                 </div>
@@ -60,8 +60,8 @@ const Books = ({t}) => {
                   <table className="table table-dark">
                     <thead>
                       <tr>
-                        <th>{t('book.isbn')}</th>
-                        <th>{t('book.title')}</th>
+                        <th>{t('books.isbn')}</th>
+                        <th>{t('books.title')}</th>
                         <th>{t('details.label')}</th>
                         {isAuthenticated && (<th>{t('edit.label')}</th>)}
                       </tr>

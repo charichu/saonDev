@@ -14,7 +14,7 @@ const Footer = ({t}) => {
     <button onClick={() => changeLanguage('en')}>en</button>
   </div>
     <p>
-      For questions and problems contact: <a href="mailto:david.vennemeier@gmail.com">david.vennemeier@gmail.com</a>
+    {t('footer.contact')} <a href="mailto:david.vennemeier@gmail.com">david.vennemeier@gmail.com</a>
     </p>
     <p>
       Using <a href="https://auth0.com">Auth0</a>

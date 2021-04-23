@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { withNamespaces } from 'react-i18next';
 import { NavLink as RouterNavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/logo2.gif";
@@ -21,7 +22,7 @@ import {
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-const NavBar = () => {
+const NavBar = ({t}) => {
   const [isOpen, setIsOpen] = useState(false);
   const {
     user,
@@ -55,7 +56,7 @@ const NavBar = () => {
                   exact
                   activeClassName="router-link-exact-active"
                 >
-                  Home
+                  {t('navbar.home')}
                 </NavLink>
               </NavItem>
               {isAuthenticated && (
@@ -87,7 +88,7 @@ const NavBar = () => {
                     exact
                     activeClassName="router-link-exact-active"
                   >
-                    Books
+                    {t('navbar.books')}
                   </NavLink>
                 </NavItem>
             </Nav>
@@ -122,7 +123,7 @@ const NavBar = () => {
                       className="dropdown-profile bg-dark text-white"
                       activeClassName="router-link-exact-active"
                     >
-                      <FontAwesomeIcon icon="user" className="mr-3" /> Profile
+                      <FontAwesomeIcon icon="user" className="mr-3" /> {t('navbar.profile')}
                     </DropdownItem>
                     <DropdownItem
                       id="qsLogoutBtn"
@@ -195,4 +196,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default withNamespaces()(NavBar);

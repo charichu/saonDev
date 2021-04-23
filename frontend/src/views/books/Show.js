@@ -57,15 +57,15 @@ const Show = ({t}) => {
         </div>
         <div className="panel-body">
           <dl>
-            <dt>{t('book.isbn')}:</dt>
+            <dt>{t('books.isbn')}:</dt>
             <dd>{book.isbn}</dd>
-            <dt>{t('book.title')}:</dt>
+            <dt>{t('books.title')}:</dt>
             <dd>{book.title}</dd>
-            <dt>{t('book.description')}:</dt>
+            <dt>{t('books.description')}:</dt>
             <dd>{book.description}</dd>
-            <dt>{t('book.short')}:</dt>
+            <dt>{t('books.shortname')}:</dt>
             <dd>{book.short}</dd>
-            <dt>{t('book.imageURL')}:</dt>
+            <dt>{t('books.imageURL')}:</dt>
             <dd>{book.imageURL}</dd>
           </dl>
           <Mutation
