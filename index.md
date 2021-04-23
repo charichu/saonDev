@@ -8,7 +8,9 @@ Here I will post the upcoming features and some dev updates. Feel free to contac
 - RBCA on Book CRUDs
   - Read is still without Auth
   - role needs to be set manually in the Auth0 Dashboard for each User
-  - Only Role: ADMIN, for all CUDs 
+  - Only Role: ADMIN, for all CUDs  
+- Multilanguage Support
+  - Locale dependent texts can only be edited NOT created through the frontend so far   
 
 
 
@@ -17,7 +19,6 @@ Here I will post the upcoming features and some dev updates. Feel free to contac
 The list are roughly sorted by priority. Sadly I cannot give any timeframes on the issues.
 
 ### Upcoming Features 
-- Multilanguage Support
 - New DataTypes
 - Randomizers Loot, NPCs
 - Character Viewer
