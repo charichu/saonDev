@@ -185,13 +185,14 @@ const EditBook = ({t}) => {
                       //NEEDS TO BE CONTROLLED DURING INPUT JUST DURING ALPHA PHASE
                       if(locale.value !== 'de' || locale.value !== 'en'){
                         //TODO THROW ERROR FOR END USER
-                      } 
-                      if(title.value && title.value !== data.book.title){                        
+                      }
+                      
+                      if(title.value && title.value !== data.book.title && title.value === '1234'){                        
                         updateTextByIdAndLocale({
                           variables: { textId: parseInt(data.book.titleId), locale: locale.value, text: title.value },
                         });
                       }
-                      if(description.value && description.value !== data.book.description){                        
+                      if(description.value && description.value !== data.book.description && description.value === '1234'){                        
                         updateTextByIdAndLocale({
                           variables: { textId: parseInt(data.book.descriptionId), locale: locale.value, text: description.value },
                         });

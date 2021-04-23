@@ -6,6 +6,7 @@ import i18n from '../i18n';
 const Footer = ({t}) => {
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+    localStorage.setItem("i18nextLng", lng);
   }
   return(
   <footer className="bg-dark p-3 text-center text-light">
