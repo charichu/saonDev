@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="saonDev" id="Project_1d71" database="PostgreSQL" >
+	<schema name="saondev" >
+		<table name="book" prior="books" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="isbn" type="varchar" length="250" jt="12" />
+			<column name="short" type="varchar" length="250" jt="12" />
+			<column name="imageurl" type="varchar" length="250" jt="12" />
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="iscore" type="boolean" jt="-7" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_books_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_books_descriptionid" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<index name="unq_books_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+		</table>
+		<table name="book_locale" prior="books_locale" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="bookid" prior="disadvantageid" type="integer" jt="4" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" />
+			<column name="locale" type="varchar" length="2" jt="12" />
+			<index name="pk_advantages_id_3" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_disadvantages_locale_0_books" to_schema="saondev" to_table="book" >
+				<fk_column name="descirptionid" pk="descriptionid" />
+			</fk>
+			<fk name="fk_disadvantages_locale_0_books_0" to_schema="saondev" to_table="book" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_disadvantages_locale_0_books_1" to_schema="saondev" to_table="book" >
+				<fk_column name="bookid" pk="id" />
+			</fk>
+		</table>
+		<table name="coreattributes" prior="en" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" prior="de" type="varchar" length="20" jt="12" />
+			<column name="descriptionde" type="varchar" length="250" jt="12" />
+			<column name="descriptionen" type="varchar" length="250" jt="12" />
+			<column name="titleen" prior="en" type="varchar" length="20" jt="12" />
+			<column name="shortde" type="varchar" length="2" jt="12" />
+			<column name="shorten" type="varchar" length="3" jt="12" />
+			<index name="pk_coreattributes_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="cultures" prior="species_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="cost" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[The amount of AP the advantage costs]]></comment>
+			</column>
+			<column name="source" type="integer" jt="4" />
+			<column name="commonprofessions" prior="attributeadjustmentspos1" type="integer[]" jt="2003" />
+			<column name="commonskills" prior="attributeadjustmentspos2" type="integer[]" jt="2003" />
+			<column name="uncommon skills" prior="attributeadjustmentsneg1" type="integer[]" jt="2003" />
+			<column name="commoncultures" type="integer[]" jt="2003" />
+			<column name="automaticvantages" type="integer[]" jt="2003" />
+			<column name="commonvantages" type="integer[]" jt="2003" />
+			<column name="uncommonvantages" type="integer[]" jt="2003" />
+			<column name="languageid" type="integer" jt="4" />
+			<column name="scriptid" type="integer" jt="4" />
+			<column name="areaknowledegeid" type="integer" jt="4" />
+			<column name="socialstatusid" type="integer" length="1" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_advantages_id_6" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_4" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_descirptionid_4" unique="UNIQUE_KEY" >
+				<column name="descirptionid" />
+			</index>
+			<index name="unq_advantages_source_2" unique="UNIQUE_KEY" >
+				<column name="source" />
+			</index>
+			<fk name="fk_advantages_sources_2" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_cultures_languages" to_schema="saondev" to_table="languages" >
+				<fk_column name="languageid" pk="id" />
+			</fk>
+			<fk name="fk_cultures_languages_0" to_schema="saondev" to_table="languages" >
+				<fk_column name="scriptid" pk="id" />
+			</fk>
+			<fk name="fk_cultures_socialstatus" to_schema="saondev" to_table="socialstatus" >
+				<fk_column name="socialstatusid" pk="id" />
+			</fk>
+		</table>
+		<table name="cultures_locale" prior="species_locale_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="areaknowlegdeid" prior="noteid" type="integer" length="600" jt="4" />
+			<column name="locale" type="varchar" length="2" jt="12" />
+			<column name="text" type="varchar" length="1000" jt="12" />
+			<column name="cultureid" type="integer" jt="4" />
+			<index name="pk_advantages_id_7" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_5" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_descirptionid_5" unique="UNIQUE_KEY" >
+				<column name="descirptionid" />
+			</index>
+			<index name="unq_species_locale_noteid_0" unique="UNIQUE_KEY" >
+				<column name="areaknowlegdeid" />
+			</index>
+			<fk name="fk_cultures_locale_cultures" to_schema="saondev" to_table="cultures" >
+				<fk_column name="id" pk="id" />
+			</fk>
+			<fk name="fk_cultures_locale_cultures_0" to_schema="saondev" to_table="cultures" >
+				<fk_column name="cultureid" pk="id" />
+			</fk>
+		</table>
+		<table name="durations" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="titleen" type="varchar" length="30" jt="12" />
+			<index name="pk_durations_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="enhancements" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" mandatory="y" />
+			<column name="cost" type="integer" jt="4" mandatory="y" />
+			<column name="minimalskill" type="integer" jt="4" />
+			<column name="spellid" type="integer" jt="4" />
+			<column name="magicalactsid" type="integer" jt="4" />
+			<column name="requirmentsid" type="integer" jt="4" />
+			<index name="pk_enhancements_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_enhancements_enhancements_locale" to_schema="saondev" to_table="enhancements_locale" >
+				<fk_column name="id" pk="enhancementid" />
+			</fk>
+			<fk name="fk_enhancements_enhancements_locale_0" to_schema="saondev" to_table="enhancements_locale" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_enhancements_enhancements_locale_1" to_schema="saondev" to_table="enhancements_locale" >
+				<fk_column name="descriptionid" pk="descriptionid" />
+			</fk>
+			<fk name="fk_enhancements_enhancements_locale_2" to_schema="saondev" to_table="enhancements_locale" >
+				<fk_column name="requirmentsid" pk="requirementid" />
+			</fk>
+			<fk name="fk_enhancements_magicalacts" to_schema="saondev" to_table="magicalacts" >
+				<fk_column name="magicalactsid" pk="id" />
+			</fk>
+			<fk name="fk_enhancements_spells" to_schema="saondev" to_table="spells" >
+				<fk_column name="spellid" pk="id" />
+			</fk>
+		</table>
+		<table name="enhancements_locale" prior="enhanc" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="enhancementid" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="requirementid" type="integer" jt="4" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<index name="pk_enhancements_locale_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_enhancements_locale_enhancementid" unique="UNIQUE_KEY" >
+				<column name="enhancementid" />
+			</index>
+			<index name="unq_enhancements_locale_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_enhancements_locale_descriptionid" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<index name="unq_enhancements_locale_requirementid" unique="UNIQUE_KEY" >
+				<column name="requirementid" />
+			</index>
+		</table>
+		<table name="languages" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" type="varchar" length="50" jt="12" mandatory="y" />
+			<column name="titleen" type="varchar" length="50" jt="12" />
+			<column name="descriptionde" type="varchar" length="500" jt="12" />
+			<column name="descriptionen" type="varchar" length="500" jt="12" />
+			<column name="isscript" prior="islanguage" type="boolean" jt="-7" mandatory="y" />
+			<column name="isspoken" type="boolean" jt="-7" mandatory="y" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_languages_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="magicalacts" prior="magicalact" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="source" type="integer" jt="4" />
+			<column name="firstcheck" type="integer" jt="4" mandatory="y" />
+			<column name="secondcheck" type="integer" jt="4" mandatory="y" />
+			<column name="thirdcheck" type="integer" jt="4" mandatory="y" />
+			<column name="categoryid" type="integer" jt="4" mandatory="y" />
+			<column name="improvmentcost" type="varchar" length="1" jt="12" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="effectid" type="integer" length="1000" jt="4" mandatory="y" />
+			<column name="castingcost" type="integer" jt="4" mandatory="y" />
+			<column name="durationid" type="integer" jt="4" />
+			<column name="propertyid" type="integer" jt="4" mandatory="y" />
+			<column name="traditionsid" type="integer[]" jt="2003" />
+			<column name="enhancements" type="integer[]" jt="2003" />
+			<column name="skill" type="integer" jt="4" />
+			<index name="pk_advantages_id_10" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_8" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_source_4" unique="UNIQUE_KEY" >
+				<column name="source" />
+			</index>
+			<index name="unq_spells_effectid_0" unique="UNIQUE_KEY" >
+				<column name="effectid" />
+			</index>
+			<index name="unq_magicalacts_categoryid" unique="UNIQUE_KEY" >
+				<column name="categoryid" />
+			</index>
+			<index name="unq_magicalacts_propertyid" unique="UNIQUE_KEY" >
+				<column name="propertyid" />
+			</index>
+			<fk name="fk_advantages_sources_4" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes_5" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="secondcheck" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes_6" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="thirdcheck" pk="id" />
+			</fk>
+			<fk name="fk_spells_coreattributes_0" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="firstcheck" pk="id" />
+			</fk>
+			<fk name="fk_spells_traditions_0" to_schema="saondev" to_table="traditions" >
+				<fk_column name="traditionsid" pk="id" />
+			</fk>
+			<fk name="fk_spells_0_skills" to_schema="saondev" to_table="skills" >
+				<fk_column name="skill" pk="id" />
+			</fk>
+			<fk name="fk_magicalacts_properties" to_schema="saondev" to_table="properties" >
+				<fk_column name="propertyid" pk="id" />
+			</fk>
+			<fk name="fk_magicalacts_durations" to_schema="saondev" to_table="durations" >
+				<fk_column name="durationid" pk="id" />
+			</fk>
+		</table>
+		<table name="magicalacts_locale" prior="spells_locale_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="categoryid" type="integer" jt="4" mandatory="y" />
+			<column name="improvmentcost" type="varchar" length="1" jt="12" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="effectid" type="integer" jt="4" />
+			<column name="spellid" type="integer" jt="4" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" />
+			<column name="locale" type="varchar" length="2" jt="12" />
+			<index name="pk_advantages_id_11" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_9" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<fk name="fk_magicalacts_locale_magicalacts" to_schema="saondev" to_table="magicalacts" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_magicalacts_locale_magicalacts_0" to_schema="saondev" to_table="magicalacts" >
+				<fk_column name="categoryid" pk="categoryid" />
+			</fk>
+			<fk name="fk_magicalacts_locale_magicalacts_1" to_schema="saondev" to_table="magicalacts" >
+				<fk_column name="effectid" pk="effectid" />
+			</fk>
+			<fk name="fk_magicalacts_locale_magicalacts_2" to_schema="saondev" to_table="magicalacts" >
+				<fk_column name="spellid" pk="id" />
+			</fk>
+		</table>
+		<table name="magicaltricks" prior="magicalacts_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="source" type="integer" jt="4" />
+			<column name="effectid" type="integer" length="1000" jt="4" mandatory="y" />
+			<column name="cost" prior="castingcost" type="integer" jt="4" mandatory="y" />
+			<column name="durationid" type="integer" jt="4" />
+			<column name="propertyid" type="integer" jt="4" mandatory="y" />
+			<column name="targetcategoryid" type="integer" jt="4" />
+			<column name="traditionsid" type="integer[]" jt="2003" />
+			<column name="rangeid" type="integer" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_advantages_id_12" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_10" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_source_5" unique="UNIQUE_KEY" >
+				<column name="source" />
+			</index>
+			<index name="unq_spells_effectid_1" unique="UNIQUE_KEY" >
+				<column name="effectid" />
+			</index>
+			<index name="unq_magicalacts_propertyid_0" unique="UNIQUE_KEY" >
+				<column name="propertyid" />
+			</index>
+			<fk name="fk_advantages_sources_5" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_magicalacts_0_targetcategories" to_schema="saondev" to_table="targetcategories" >
+				<fk_column name="targetcategoryid" pk="id" />
+			</fk>
+			<fk name="fk_magicalacts_0_ranges" to_schema="saondev" to_table="ranges" >
+				<fk_column name="rangeid" pk="id" />
+			</fk>
+			<fk name="fk_magicalacts_0_traditions" to_schema="saondev" to_table="traditions" >
+				<fk_column name="traditionsid" pk="id" />
+			</fk>
+			<fk name="fk_magicalacts_0_properties" to_schema="saondev" to_table="properties" >
+				<fk_column name="propertyid" pk="id" />
+			</fk>
+			<fk name="fk_magicalacts_0_durations" to_schema="saondev" to_table="durations" >
+				<fk_column name="durationid" pk="id" />
+			</fk>
+		</table>
+		<table name="magicaltricks_locale" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="magicaltricksid" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" />
+			<column name="effectid" type="integer" jt="4" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<index name="pk_magicaltricks_locale_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_magicaltricks_locale_magicaltricks" to_schema="saondev" to_table="magicaltricks" >
+				<fk_column name="magicaltricksid" pk="id" />
+			</fk>
+			<fk name="fk_magicaltricks_locale_magicaltricks_0" to_schema="saondev" to_table="magicaltricks" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_magicaltricks_locale_magicaltricks_1" to_schema="saondev" to_table="magicaltricks" >
+				<fk_column name="effectid" pk="effectid" />
+			</fk>
+		</table>
+		<table name="properties" prior="traditions_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" type="varchar" length="20" jt="12" />
+			<column name="titleen" type="varchar" length="20" jt="12" />
+			<column name="descriptionde" type="varchar" length="250" jt="12" />
+			<column name="descriptionen" type="varchar" length="250" jt="12" />
+			<column name="source" type="integer" jt="4" />
+			<index name="pk_coreattributes_id_1" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_traditions_sources_0" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+		</table>
+		<table name="ranges" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="titleen" type="varchar" length="30" jt="12" />
+			<index name="pk_ranges_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="skills" prior="vantages_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="source" type="integer" jt="4" />
+			<column name="requirementid" type="integer" length="250" jt="4" />
+			<column name="firstcheck" type="integer" jt="4" mandatory="y" />
+			<column name="secondcheck" type="integer" jt="4" mandatory="y" />
+			<column name="thirdcheck" type="integer" jt="4" mandatory="y" />
+			<column name="categoryid" prior="category" type="integer" jt="4" mandatory="y" />
+			<column name="usagesid" prior="usages" type="integer" jt="4" />
+			<column name="encumbrance" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="toolsid" prior="tools" type="integer[]" jt="2003" />
+			<column name="criticalsuccessid" type="integer" jt="4" />
+			<column name="criticalfailid" type="integer" jt="4" />
+			<column name="improvmentcost" type="varchar" length="1" jt="12" />
+			<column name="failid" type="integer" jt="4" />
+			<column name="qualityid" type="integer" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_advantages_id_0" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_0" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_descirptionid_0" unique="UNIQUE_KEY" >
+				<column name="descirptionid" />
+			</index>
+			<index name="unq_advantages_source_0" unique="UNIQUE_KEY" >
+				<column name="source" />
+			</index>
+			<fk name="fk_advantages_sources_0" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="firstcheck" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes_0" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="secondcheck" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes_1" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="thirdcheck" pk="id" />
+			</fk>
+			<fk name="fk_skills_skills_locale" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="toolsid" pk="toolsid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_0" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_1" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="descirptionid" pk="descirptionid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_2" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="requirementid" pk="requirementid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_3" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="categoryid" pk="categoryid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_4" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="usagesid" pk="usagesid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_5" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="criticalsuccessid" pk="criticalsuccessid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_6" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="criticalfailid" pk="criticalfailid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_7" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="failid" pk="failid" />
+			</fk>
+			<fk name="fk_skills_skills_locale_8" to_schema="saondev" to_table="skills_locale" >
+				<fk_column name="qualityid" pk="qualityid" />
+			</fk>
+		</table>
+		<table name="skills_locale" prior="skills_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="requirementid" type="integer" length="250" jt="4" />
+			<column name="categoryid" type="integer" jt="4" />
+			<column name="usagesid" type="integer" jt="4" />
+			<column name="toolsid" type="integer" jt="4" />
+			<column name="criticalsuccessid" type="integer" jt="4" />
+			<column name="criticalfailid" type="integer" jt="4" />
+			<column name="failid" type="integer" jt="4" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<column name="qualityid" type="integer" jt="4" />
+			<column name="skillid" type="integer" jt="4" mandatory="y" />
+			<index name="pk_advantages_id_4" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_2" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_descirptionid_2" unique="UNIQUE_KEY" >
+				<column name="descirptionid" />
+			</index>
+			<index name="unq_skills_locale_toolsid" unique="UNIQUE_KEY" >
+				<column name="toolsid" />
+			</index>
+			<index name="unq_skills_locale_requirementid" unique="UNIQUE_KEY" >
+				<column name="requirementid" />
+			</index>
+			<index name="unq_skills_locale_categoryid" unique="UNIQUE_KEY" >
+				<column name="categoryid" />
+			</index>
+			<index name="unq_skills_locale_usagesid" unique="UNIQUE_KEY" >
+				<column name="usagesid" />
+			</index>
+			<index name="unq_skills_locale_criticalsuccessid" unique="UNIQUE_KEY" >
+				<column name="criticalsuccessid" />
+			</index>
+			<index name="unq_skills_locale_criticalfailid" unique="UNIQUE_KEY" >
+				<column name="criticalfailid" />
+			</index>
+			<index name="unq_skills_locale_failid" unique="UNIQUE_KEY" >
+				<column name="failid" />
+			</index>
+			<index name="unq_skills_locale_qualityid" unique="UNIQUE_KEY" >
+				<column name="qualityid" />
+			</index>
+			<fk name="fk_skills_locale_skills" to_schema="saondev" to_table="skills" >
+				<fk_column name="skillid" pk="id" />
+			</fk>
+		</table>
+		<table name="socialstatus" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" type="varchar" length="50" jt="12" mandatory="y" />
+			<column name="titleen" type="varchar" length="50" jt="12" mandatory="y" />
+			<column name="rulede" type="varchar" length="500" jt="12" />
+			<column name="ruleen" type="varchar" length="500" jt="12" />
+			<index name="pk_socialstatus_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="sources" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" prior="title" type="integer" jt="4" />
+			<column name="page" type="integer" jt="4" />
+			<index name="pk_sources_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_sources_books" to_schema="saondev" to_table="book" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+		</table>
+		<table name="species" prior="vantages_1" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="cost" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[The amount of AP the advantage costs]]></comment>
+			</column>
+			<column name="source" type="integer" jt="4" />
+			<column name="lifepointbase" type="integer" jt="4" mandatory="y" />
+			<column name="spiritbase" type="integer" jt="4" mandatory="y" />
+			<column name="toughnessbase" type="integer" jt="4" mandatory="y" />
+			<column name="movementbase" type="integer" jt="4" mandatory="y" />
+			<column name="attributeadjustmentspos1" type="integer[]" jt="2003" />
+			<column name="attributeadjustmentspos2" type="integer[]" jt="2003" />
+			<column name="attributeadjustmentsneg1" type="integer[]" jt="2003" />
+			<column name="attributeadjustmentsneg2" type="integer[]" jt="2003" />
+			<column name="commoncultures" type="integer[]" jt="2003" />
+			<column name="automaticvantages" type="integer[]" jt="2003" />
+			<column name="commonvantages" type="integer[]" jt="2003" />
+			<column name="uncommonvantages" type="integer[]" jt="2003" />
+			<column name="noteid" prior="note" type="integer" length="600" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_advantages_id_2" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_1" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_descirptionid_1" unique="UNIQUE_KEY" >
+				<column name="descirptionid" />
+			</index>
+			<index name="unq_advantages_source_1" unique="UNIQUE_KEY" >
+				<column name="source" />
+			</index>
+			<fk name="fk_advantages_sources_1" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_species_species_locale" to_schema="saondev" to_table="species_locale" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_species_species_locale_0" to_schema="saondev" to_table="species_locale" >
+				<fk_column name="descirptionid" pk="descirptionid" />
+			</fk>
+			<fk name="fk_species_species_locale_1" to_schema="saondev" to_table="species_locale" >
+				<fk_column name="noteid" pk="noteid" />
+			</fk>
+		</table>
+		<table name="species_locale" prior="species_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="noteid" type="integer" length="600" jt="4" />
+			<column name="locale" type="varchar" length="2" jt="12" />
+			<column name="text" type="varchar" length="1000" jt="12" />
+			<column name="speciesid" type="integer" jt="4" mandatory="y" />
+			<index name="pk_advantages_id_5" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_3" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_descirptionid_3" unique="UNIQUE_KEY" >
+				<column name="descirptionid" />
+			</index>
+			<index name="unq_species_locale_noteid" unique="UNIQUE_KEY" >
+				<column name="noteid" />
+			</index>
+			<fk name="fk_species_locale_species" to_schema="saondev" to_table="species" >
+				<fk_column name="speciesid" pk="id" />
+			</fk>
+		</table>
+		<table name="spells" prior="skills_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="source" type="integer" jt="4" />
+			<column name="firstcheck" type="integer" jt="4" mandatory="y" />
+			<column name="secondcheck" type="integer" jt="4" mandatory="y" />
+			<column name="thirdcheck" type="integer" jt="4" mandatory="y" />
+			<column name="categoryid" type="integer" jt="4" mandatory="y" />
+			<column name="improvmentcost" type="varchar" length="1" jt="12" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="effectid" prior="effect" type="integer" length="1000" jt="4" mandatory="y" />
+			<column name="castingtimeid" prior="castingtime" type="integer" jt="4" />
+			<column name="castingtimevalue" type="integer" jt="4" mandatory="y" />
+			<column name="castingcost" type="integer" jt="4" mandatory="y" />
+			<column name="rangeid" type="integer" jt="4" mandatory="y" />
+			<column name="durationid" type="integer" jt="4" />
+			<column name="durationvalue" type="integer" jt="4" mandatory="y" />
+			<column name="targetcategoryid" type="integer" jt="4" mandatory="y" />
+			<column name="propertyid" type="integer" jt="4" mandatory="y" />
+			<column name="traditionsid" type="integer[]" jt="2003" />
+			<column name="enhancements" type="integer[]" jt="2003" />
+			<column name="isritual" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<index name="pk_advantages_id_8" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_6" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_source_3" unique="UNIQUE_KEY" >
+				<column name="source" />
+			</index>
+			<index name="unq_spells_effectid" unique="UNIQUE_KEY" >
+				<column name="effectid" />
+			</index>
+			<fk name="fk_advantages_sources_3" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes_3" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="secondcheck" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes_4" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="thirdcheck" pk="id" />
+			</fk>
+			<fk name="fk_spells_coreattributes" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="firstcheck" pk="id" />
+			</fk>
+			<fk name="fk_spells_durations" to_schema="saondev" to_table="durations" >
+				<fk_column name="durationid" pk="id" />
+			</fk>
+			<fk name="fk_spells_ranges" to_schema="saondev" to_table="ranges" >
+				<fk_column name="rangeid" pk="id" />
+			</fk>
+			<fk name="fk_spells_durations_0" to_schema="saondev" to_table="durations" >
+				<fk_column name="castingtimeid" pk="id" />
+			</fk>
+			<fk name="fk_spells_traditions" to_schema="saondev" to_table="traditions" >
+				<fk_column name="traditionsid" pk="id" />
+			</fk>
+			<fk name="fk_spells_targetcategories" to_schema="saondev" to_table="targetcategories" >
+				<fk_column name="targetcategoryid" pk="id" />
+			</fk>
+			<fk name="fk_spells_properties" to_schema="saondev" to_table="properties" >
+				<fk_column name="propertyid" pk="id" />
+			</fk>
+		</table>
+		<table name="spells_locale" prior="spells_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="categoryid" type="integer" jt="4" mandatory="y" />
+			<column name="improvmentcost" type="varchar" length="1" jt="12" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="effectid" type="integer" jt="4" />
+			<column name="spellid" type="integer" jt="4" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<index name="pk_advantages_id_9" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_7" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<fk name="fk_spells_locale_spells" to_schema="saondev" to_table="spells" >
+				<fk_column name="spellid" pk="id" />
+			</fk>
+			<fk name="fk_spells_locale_spells_0" to_schema="saondev" to_table="spells" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_spells_locale_spells_2" to_schema="saondev" to_table="spells" >
+				<fk_column name="effectid" pk="effectid" />
+			</fk>
+		</table>
+		<table name="targetcategories" prior="ranges_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" type="varchar" length="30" jt="12" mandatory="y" />
+			<column name="titleen" type="varchar" length="30" jt="12" />
+			<index name="pk_ranges_id_0" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="traditions" prior="coreattributes_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" type="varchar" length="20" jt="12" />
+			<column name="titleen" type="varchar" length="20" jt="12" />
+			<column name="descriptionde" type="varchar" length="250" jt="12" />
+			<column name="descriptionen" type="varchar" length="250" jt="12" />
+			<column name="source" type="integer" jt="4" />
+			<index name="pk_coreattributes_id_0" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_traditions_sources" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+		</table>
+		<table name="vantages" prior="advantages" >
+			<column name="id" prior="advantageid" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" prior="descriptionid" type="integer" jt="4" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="stage" prior="grade" type="integer" jt="4" >
+				<comment><![CDATA[If an advantage has different levels like extra health]]></comment>
+			</column>
+			<column name="rank" type="integer" jt="4" >
+				<comment><![CDATA[Shows different ranks like: Adel I, Adel II, Adel III]]></comment>
+			</column>
+			<column name="cost" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[The amount of AP the advantage costs]]></comment>
+			</column>
+			<column name="source" type="integer" jt="4" />
+			<column name="requirementid" prior="requirement" type="integer" length="250" jt="4" />
+			<column name="isadvantage" type="boolean" jt="-7" mandatory="y" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_advantages_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_descirptionid" unique="UNIQUE_KEY" >
+				<column name="descirptionid" />
+			</index>
+			<index name="unq_advantages_source" unique="UNIQUE_KEY" >
+				<column name="source" />
+			</index>
+			<fk name="fk_advantages_sources" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+		</table>
+		<table name="vantages_locale" prior="advantages_locale" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descirptionid" type="integer" jt="4" />
+			<column name="advantageid" prior="stage" type="integer" jt="4" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" />
+			<column name="locale" type="varchar" length="2" jt="12" />
+			<column name="requirementid" type="integer" jt="4" />
+			<index name="pk_advantages_id_1" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_advantages_locale" to_schema="saondev" to_table="vantages" >
+				<fk_column name="advantageid" pk="id" />
+			</fk>
+			<fk name="fk_advantages_locale_advantages" to_schema="saondev" to_table="vantages" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_advantages_locale_advantages_0" to_schema="saondev" to_table="vantages" >
+				<fk_column name="descirptionid" pk="descirptionid" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Layout" id="Layout_1741" show_relation="columns" >
+		<entity schema="saondev" name="book" color="C1D8EE" x="48" y="224" />
+		<entity schema="saondev" name="book_locale" color="3986C1" x="272" y="224" />
+		<entity schema="saondev" name="coreattributes" color="C1D8EE" x="464" y="608" />
+		<entity schema="saondev" name="cultures" color="3986C1" x="1120" y="912" />
+		<entity schema="saondev" name="cultures_locale" color="3986C1" x="1344" y="928" />
+		<entity schema="saondev" name="durations" color="C1D8EE" x="1120" y="672" />
+		<entity schema="saondev" name="enhancements" color="C1D8EE" x="1632" y="544" />
+		<entity schema="saondev" name="enhancements_locale" color="C1D8EE" x="1824" y="544" />
+		<entity schema="saondev" name="languages" color="C1D8EE" x="656" y="624" />
+		<entity schema="saondev" name="magicalacts" color="3986C1" x="1552" y="96" />
+		<entity schema="saondev" name="magicalacts_locale" color="3986C1" x="1760" y="112" />
+		<entity schema="saondev" name="magicaltricks" color="3986C1" x="656" y="80" />
+		<entity schema="saondev" name="magicaltricks_locale" color="C1D8EE" x="464" y="80" />
+		<entity schema="saondev" name="properties" color="3986C1" x="1376" y="656" />
+		<entity schema="saondev" name="ranges" color="C1D8EE" x="1104" y="576" />
+		<entity schema="saondev" name="skills" color="3986C1" x="96" y="880" />
+		<entity schema="saondev" name="skills_locale" color="3986C1" x="352" y="960" />
+		<entity schema="saondev" name="socialstatus" color="C1D8EE" x="832" y="608" />
+		<entity schema="saondev" name="sources" color="C1D8EE" x="480" y="384" />
+		<entity schema="saondev" name="species" color="3986C1" x="640" y="896" />
+		<entity schema="saondev" name="species_locale" color="3986C1" x="928" y="928" />
+		<entity schema="saondev" name="spells" color="3986C1" x="1040" y="128" />
+		<entity schema="saondev" name="spells_locale" color="3986C1" x="1280" y="160" />
+		<entity schema="saondev" name="targetcategories" color="3986C1" x="1232" y="608" />
+		<entity schema="saondev" name="traditions" color="3986C1" x="960" y="576" />
+		<entity schema="saondev" name="vantages" color="C4EEC1" x="64" y="544" />
+		<entity schema="saondev" name="vantages_locale" color="3986C1" x="256" y="544" />
+		<group name="Group_advantage" color="C4E0F9" >
+			<entity schema="saondev" name="vantages_locale" />
+			<entity schema="saondev" name="vantages" />
+		</group>
+		<group name="Group_Book" color="C4E0F9" >
+			<entity schema="saondev" name="book" />
+			<entity schema="saondev" name="book_locale" />
+		</group>
+		<group name="Group_skills" color="C4E0F9" >
+			<entity schema="saondev" name="skills" />
+			<entity schema="saondev" name="skills_locale" />
+		</group>
+		<group name="Group_species" color="C4E0F9" >
+			<entity schema="saondev" name="species_locale" />
+			<entity schema="saondev" name="species" />
+		</group>
+		<group name="Group_culture" color="C4E0F9" >
+			<entity schema="saondev" name="cultures" />
+			<entity schema="saondev" name="cultures_locale" />
+		</group>
+		<group name="Group_tables_with_translastionswithin" color="C4E0F9" >
+			<entity schema="saondev" name="coreattributes" />
+			<entity schema="saondev" name="languages" />
+			<entity schema="saondev" name="socialstatus" />
+			<entity schema="saondev" name="durations" />
+			<entity schema="saondev" name="ranges" />
+			<entity schema="saondev" name="targetcategories" />
+			<entity schema="saondev" name="traditions" />
+			<entity schema="saondev" name="properties" />
+		</group>
+		<group name="Group_spells" color="C4E0F9" >
+			<entity schema="saondev" name="spells" />
+			<entity schema="saondev" name="spells_locale" />
+		</group>
+		<group name="Group_magicalAxc" color="C4E0F9" >
+			<entity schema="saondev" name="magicalacts" />
+			<entity schema="saondev" name="magicalacts_locale" />
+		</group>
+		<group name="Group_magicaltricks" color="C4E0F9" >
+			<entity schema="saondev" name="magicaltricks" />
+			<entity schema="saondev" name="magicaltricks_locale" />
+		</group>
+		<group name="Group_enhancements" color="C4E0F9" >
+			<entity schema="saondev" name="enhancements" />
+			<entity schema="saondev" name="enhancements_locale" />
+		</group>
+	</layout>
+</project>
