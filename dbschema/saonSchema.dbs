@@ -1,6 +1,150 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="saonDev" id="Project_1d71" database="PostgreSQL" >
 	<schema name="saondev" >
+		<table name="armour" prior="armours" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="source" type="integer" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="noteid" type="integer" jt="4" />
+			<column name="advantageid" type="integer" jt="4" />
+			<column name="disadvantageid" type="integer" jt="4" />
+			<column name="armourvalue" type="integer" jt="4" />
+			<column name="encumbrancevalue" type="integer" jt="4" />
+			<column name="additionaldisadvantageid" prior="additionaldisadvantage" type="integer" jt="4" />
+			<column name="weight" type="integer" jt="4" />
+			<column name="price" type="integer" jt="4" />
+			<column name="complexity" type="varchar" length="5" jt="12" />
+			<column name="categoryid" prior="category" type="integer" jt="4" />
+			<index name="pk_armour_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_armour_advantageid" unique="UNIQUE_KEY" >
+				<column name="advantageid" />
+			</index>
+			<index name="unq_armour_disadvantageid" unique="UNIQUE_KEY" >
+				<column name="disadvantageid" />
+			</index>
+			<index name="unq_armour_additionaldisadvantageid" unique="UNIQUE_KEY" >
+				<column name="additionaldisadvantageid" />
+			</index>
+			<index name="unq_armour_categoryid" unique="UNIQUE_KEY" >
+				<column name="categoryid" />
+			</index>
+			<index name="unq_armour_noteid" unique="UNIQUE_KEY" >
+				<column name="noteid" />
+			</index>
+			<index name="unq_armour_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_armour_descriptionid" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<fk name="fk_armour_sources" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+		</table>
+		<table name="armour_locale" prior="armour_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="noteid" type="integer" jt="4" />
+			<column name="advantageid" type="integer" jt="4" />
+			<column name="disadvantageid" type="integer" jt="4" />
+			<column name="additionaldisadvantageid" type="integer" jt="4" />
+			<column name="categoryid" type="integer" jt="4" />
+			<column name="armourid" type="integer" jt="4" mandatory="y" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<index name="pk_armour_id_0" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_armour_locale_armour" to_schema="saondev" to_table="armour" >
+				<fk_column name="armourid" pk="id" />
+			</fk>
+			<fk name="fk_armour_locale_armour_0" to_schema="saondev" to_table="armour" >
+				<fk_column name="advantageid" pk="advantageid" />
+			</fk>
+			<fk name="fk_armour_locale_armour_1" to_schema="saondev" to_table="armour" >
+				<fk_column name="disadvantageid" pk="disadvantageid" />
+			</fk>
+			<fk name="fk_armour_locale_armour_2" to_schema="saondev" to_table="armour" >
+				<fk_column name="additionaldisadvantageid" pk="additionaldisadvantageid" />
+			</fk>
+			<fk name="fk_armour_locale_armour_3" to_schema="saondev" to_table="armour" >
+				<fk_column name="categoryid" pk="categoryid" />
+			</fk>
+			<fk name="fk_armour_locale_armour_4" to_schema="saondev" to_table="armour" >
+				<fk_column name="noteid" pk="noteid" />
+			</fk>
+			<fk name="fk_armour_locale_armour_5" to_schema="saondev" to_table="armour" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_armour_locale_armour_6" to_schema="saondev" to_table="armour" >
+				<fk_column name="descriptionid" pk="descriptionid" />
+			</fk>
+		</table>
+		<table name="blessings" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="source" type="integer" jt="4" />
+			<column name="effectid" type="integer" jt="4" mandatory="y" />
+			<column name="rangeid" type="integer" jt="4" mandatory="y" />
+			<column name="durationid" type="integer" jt="4" mandatory="y" />
+			<column name="durationvalue" type="integer" jt="4" mandatory="y" />
+			<column name="targetcategoryid" type="integer" jt="4" mandatory="y" />
+			<column name="aspectid" prior="aspect" type="integer" jt="4" />
+			<column name="godid" type="integer" jt="4" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_blessings_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_blessings_effectid" unique="UNIQUE_KEY" >
+				<column name="effectid" />
+			</index>
+			<index name="unq_blessings_aspectid" unique="UNIQUE_KEY" >
+				<column name="aspectid" />
+			</index>
+			<index name="unq_blessings_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<fk name="fk_blessings_sources" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_blessings_gods" to_schema="saondev" to_table="gods" >
+				<fk_column name="godid" pk="id" />
+			</fk>
+			<fk name="fk_blessings_ranges" to_schema="saondev" to_table="ranges" >
+				<fk_column name="rangeid" pk="id" />
+			</fk>
+			<fk name="fk_blessings_durations" to_schema="saondev" to_table="durations" >
+				<fk_column name="durationid" pk="id" />
+			</fk>
+			<fk name="fk_blessings_targetcategories" to_schema="saondev" to_table="targetcategories" >
+				<fk_column name="targetcategoryid" pk="id" />
+			</fk>
+		</table>
+		<table name="blessings_locale" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" />
+			<column name="effectid" type="integer" jt="4" />
+			<column name="aspectid" type="integer" jt="4" />
+			<column name="titleid" type="integer" jt="4" />
+			<index name="pk_blessings_locale_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_blessings_locale_blessings" to_schema="saondev" to_table="blessings" >
+				<fk_column name="effectid" pk="effectid" />
+			</fk>
+			<fk name="fk_blessings_locale_blessings_0" to_schema="saondev" to_table="blessings" >
+				<fk_column name="aspectid" pk="aspectid" />
+			</fk>
+			<fk name="fk_blessings_locale_blessings_1" to_schema="saondev" to_table="blessings" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+		</table>
 		<table name="book" prior="books" >
 			<column name="id" type="integer" jt="4" mandatory="y" />
 			<column name="isbn" type="varchar" length="250" jt="12" />
@@ -42,6 +186,55 @@
 				<fk_column name="bookid" pk="id" />
 			</fk>
 		</table>
+		<table name="combatskills" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="source" type="integer" jt="4" />
+			<column name="specialsid" type="integer" jt="4" />
+			<column name="attribute" type="integer[]" jt="2003" mandatory="y" />
+			<column name="improvmentcost" type="varchar" length="1" jt="12" mandatory="y" />
+			<index name="pk_combatskills_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_combatskills_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_combatskills_descriptionid" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<index name="unq_combatskills_specialsid" unique="UNIQUE_KEY" >
+				<column name="specialsid" />
+			</index>
+			<fk name="fk_combatskills_coreattributes" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="attribute" pk="id" />
+			</fk>
+		</table>
+		<table name="combatskills_locale" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="titleid" type="integer" length="250" jt="4" />
+			<column name="descriptionid" type="integer" jt="4" mandatory="y" />
+			<column name="specialsid" prior="specialid" type="integer" jt="4" />
+			<column name="combatskillid" type="integer" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_combatskills_locale_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_combatskills_locale_combatskills" to_schema="saondev" to_table="combatskills" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_combatskills_locale_combatskills_0" to_schema="saondev" to_table="combatskills" >
+				<fk_column name="descriptionid" pk="descriptionid" />
+			</fk>
+			<fk name="fk_combatskills_locale_combatskills_1" to_schema="saondev" to_table="combatskills" >
+				<fk_column name="specialsid" pk="specialsid" />
+			</fk>
+			<fk name="fk_combatskills_locale_combatskills_2" to_schema="saondev" to_table="combatskills" >
+				<fk_column name="combatskillid" pk="id" />
+			</fk>
+		</table>
 		<table name="coreattributes" prior="en" >
 			<column name="id" type="integer" jt="4" mandatory="y" />
 			<column name="titlede" prior="de" type="varchar" length="20" jt="12" />
@@ -53,6 +246,24 @@
 			<index name="pk_coreattributes_id" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
+		</table>
+		<table name="culturepackages" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="skillsid" type="integer[]" jt="2003" />
+			<column name="skillbonus" type="integer[]" jt="2003" />
+			<column name="apvalue" type="integer" jt="4" mandatory="y" />
+			<column name="cultureid" type="integer" jt="4" mandatory="y" />
+			<index name="pk_culturepackages_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_culturepackages_cultures" to_schema="saondev" to_table="cultures" >
+				<fk_column name="cultureid" pk="id" />
+			</fk>
+			<fk name="fk_culturepackages_skills" to_schema="saondev" to_table="skills" >
+				<fk_column name="skillsid" pk="id" />
+			</fk>
 		</table>
 		<table name="cultures" prior="species_0" >
 			<column name="id" type="integer" jt="4" mandatory="y" >
@@ -111,9 +322,6 @@
 			<column name="locale" type="varchar" length="2" jt="12" />
 			<column name="text" type="varchar" length="1000" jt="12" />
 			<column name="cultureid" type="integer" jt="4" />
-			<index name="pk_advantages_id_7" unique="PRIMARY_KEY" >
-				<column name="id" />
-			</index>
 			<index name="unq_advantages_titleid_5" unique="UNIQUE_KEY" >
 				<column name="titleid" />
 			</index>
@@ -128,6 +336,12 @@
 			</fk>
 			<fk name="fk_cultures_locale_cultures_0" to_schema="saondev" to_table="cultures" >
 				<fk_column name="cultureid" pk="id" />
+			</fk>
+			<fk name="fk_cultures_locale_cultures_1" to_schema="saondev" to_table="cultures" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_cultures_locale_cultures_2" to_schema="saondev" to_table="cultures" >
+				<fk_column name="descirptionid" pk="descirptionid" />
 			</fk>
 		</table>
 		<table name="durations" prior="tbl" >
@@ -193,6 +407,79 @@
 				<column name="requirementid" />
 			</index>
 		</table>
+		<table name="gods" prior="traditions_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titlede" type="varchar" length="20" jt="12" />
+			<column name="titleen" type="varchar" length="20" jt="12" />
+			<column name="descriptionde" type="varchar" length="250" jt="12" />
+			<column name="descriptionen" type="varchar" length="250" jt="12" />
+			<column name="source" type="integer" jt="4" />
+			<index name="pk_coreattributes_id_2" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_traditions_sources_1" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+		</table>
+		<table name="items" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="weight" type="integer" jt="4" />
+			<column name="source" type="integer" jt="4" />
+			<column name="structurepoints" type="integer" jt="4" />
+			<column name="complexity" type="varchar" length="5" jt="12" />
+			<column name="price" type="varchar" jt="12" />
+			<column name="ruleid" type="integer" jt="4" />
+			<column name="category" type="integer" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_items_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_items_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_items_descriptionid" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<index name="unq_items_ruleid" unique="UNIQUE_KEY" >
+				<column name="ruleid" />
+			</index>
+			<index name="unq_items_category" unique="UNIQUE_KEY" >
+				<column name="category" />
+			</index>
+			<fk name="fk_items_sources" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+		</table>
+		<table name="items_locale" prior="items_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="ruleid" type="integer" jt="4" />
+			<column name="category" type="integer" jt="4" />
+			<column name="itemid" type="integer" jt="4" mandatory="y" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<index name="pk_items_id_0" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_items_0_items" to_schema="saondev" to_table="items" >
+				<fk_column name="itemid" pk="id" />
+			</fk>
+			<fk name="fk_items_0_items_0" to_schema="saondev" to_table="items" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_items_0_items_1" to_schema="saondev" to_table="items" >
+				<fk_column name="descriptionid" pk="descriptionid" />
+			</fk>
+			<fk name="fk_items_0_items_2" to_schema="saondev" to_table="items" >
+				<fk_column name="ruleid" pk="ruleid" />
+			</fk>
+			<fk name="fk_items_0_items_3" to_schema="saondev" to_table="items" >
+				<fk_column name="category" pk="category" />
+			</fk>
+		</table>
 		<table name="languages" prior="tbl" >
 			<column name="id" type="integer" jt="4" mandatory="y" />
 			<column name="titlede" type="varchar" length="50" jt="12" mandatory="y" />
@@ -205,6 +492,100 @@
 			<index name="pk_languages_id" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
+		</table>
+		<table name="liturgies" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="source" type="integer" jt="4" />
+			<index name="pk_liturgies_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="liturgy" prior="liturgies_" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="source" type="integer" jt="4" />
+			<column name="firstcheck" type="integer" jt="4" mandatory="y" />
+			<column name="secondcheck" type="integer" jt="4" mandatory="y" />
+			<column name="thirdcheck" type="integer" jt="4" mandatory="y" />
+			<column name="godid" prior="categoryid" type="integer[]" jt="2003" mandatory="y" />
+			<column name="improvmentcost" type="varchar" length="1" jt="12" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="effectid" type="integer" length="1000" jt="4" mandatory="y" />
+			<column name="castingtimeid" type="integer" jt="4" />
+			<column name="castingtimevalue" type="integer" jt="4" mandatory="y" />
+			<column name="castingcost" type="integer" jt="4" mandatory="y" />
+			<column name="rangeid" type="integer" jt="4" mandatory="y" />
+			<column name="durationid" type="integer" jt="4" />
+			<column name="durationvalue" type="integer" jt="4" mandatory="y" />
+			<column name="targetcategoryid" type="integer" jt="4" mandatory="y" />
+			<column name="enhancements" type="integer[]" jt="2003" />
+			<column name="isceremony" prior="isritual" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<index name="pk_advantages_id_13" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_advantages_titleid_11" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_advantages_source_6" unique="UNIQUE_KEY" >
+				<column name="source" />
+			</index>
+			<index name="unq_spells_effectid_2" unique="UNIQUE_KEY" >
+				<column name="effectid" />
+			</index>
+			<index name="unq_liturgy_categoryid" unique="UNIQUE_KEY" >
+				<column name="godid" />
+			</index>
+			<fk name="fk_advantages_sources_6" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes_7" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="secondcheck" pk="id" />
+			</fk>
+			<fk name="fk_skills_coreattributes_8" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="thirdcheck" pk="id" />
+			</fk>
+			<fk name="fk_spells_coreattributes_1" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="firstcheck" pk="id" />
+			</fk>
+			<fk name="fk_spells_durations_1" to_schema="saondev" to_table="durations" >
+				<fk_column name="durationid" pk="id" />
+			</fk>
+			<fk name="fk_spells_ranges_0" to_schema="saondev" to_table="ranges" >
+				<fk_column name="rangeid" pk="id" />
+			</fk>
+			<fk name="fk_spells_durations_2" to_schema="saondev" to_table="durations" >
+				<fk_column name="castingtimeid" pk="id" />
+			</fk>
+			<fk name="fk_spells_targetcategories_0" to_schema="saondev" to_table="targetcategories" >
+				<fk_column name="targetcategoryid" pk="id" />
+			</fk>
+			<fk name="fk_liturgy_gods" to_schema="saondev" to_table="gods" >
+				<fk_column name="godid" pk="id" />
+			</fk>
+		</table>
+		<table name="liturgy_locale" prior="spells_locale_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" >
+				<comment><![CDATA[unique]]></comment>
+			</column>
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="effectid" type="integer" jt="4" />
+			<column name="liturgyid" prior="spellid" type="integer" jt="4" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<fk name="fk_liturgy_locale_liturgy" to_schema="saondev" to_table="liturgy" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_liturgy_locale_liturgy_0" to_schema="saondev" to_table="liturgy" >
+				<fk_column name="liturgyid" pk="id" />
+			</fk>
+			<fk name="fk_liturgy_locale_liturgy_1" to_schema="saondev" to_table="liturgy" >
+				<fk_column name="effectid" pk="effectid" />
+			</fk>
 		</table>
 		<table name="magicalacts" prior="magicalact" >
 			<column name="id" type="integer" jt="4" mandatory="y" >
@@ -367,6 +748,90 @@
 				<fk_column name="effectid" pk="effectid" />
 			</fk>
 		</table>
+		<table name="professions" prior="prof" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="categoryid" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="apvalue" type="integer" jt="4" mandatory="y" />
+			<column name="requirmentsid" type="integer[]" jt="2003" />
+			<column name="specialabilitiesid" type="integer[]" jt="2003" />
+			<column name="skillsid" prior="skills" type="integer[]" jt="2003" />
+			<column name="skillbonus" type="integer[]" jt="2003" />
+			<column name="combatskillid" type="integer[]" jt="2003" />
+			<column name="combatskillbonus" type="integer[]" jt="2003" />
+			<column name="spellid" type="integer[]" jt="2003" />
+			<column name="spellbonus" type="integer[]" jt="2003" />
+			<column name="liturgyid" type="integer[]" jt="2003" />
+			<column name="liturgybonus" type="integer[]" jt="2003" />
+			<column name="commonvantages" type="integer[]" jt="2003" />
+			<column name="uncommonvantages" type="integer[]" jt="2003" />
+			<column name="isvariant" type="boolean" jt="-7" mandatory="y" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="variants" type="integer[]" jt="2003" />
+			<column name="source" type="integer" jt="4" />
+			<column name="variantchangesid" type="integer" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="specialabilities" type="integer[]" jt="2003" />
+			<index name="pk_professions_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_professions_variantchangesid" unique="UNIQUE_KEY" >
+				<column name="variantchangesid" />
+			</index>
+			<index name="unq_professions_descriptionid" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<index name="unq_professions_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<fk name="fk_professions_skills" to_schema="saondev" to_table="skills" >
+				<fk_column name="skillsid" pk="id" />
+			</fk>
+			<fk name="fk_professions_spells" to_schema="saondev" to_table="spells" >
+				<fk_column name="spellid" pk="id" />
+			</fk>
+			<fk name="fk_professions_liturgy" to_schema="saondev" to_table="liturgy" >
+				<fk_column name="liturgyid" pk="id" />
+			</fk>
+			<fk name="fk_professions_sources" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_professions_vantages" to_schema="saondev" to_table="vantages" >
+				<fk_column name="commonvantages" pk="id" />
+			</fk>
+			<fk name="fk_professions_vantages_0" to_schema="saondev" to_table="vantages" >
+				<fk_column name="uncommonvantages" pk="id" />
+			</fk>
+			<fk name="fk_professions_combatskills" to_schema="saondev" to_table="combatskills" >
+				<fk_column name="combatskillid" pk="id" />
+			</fk>
+		</table>
+		<table name="professions_locale" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" />
+			<column name="variantchangesid" type="integer" jt="4" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="professionid" type="integer" jt="4" mandatory="y" />
+			<index name="pk_professions_locale_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_professions_locale_professions" to_schema="saondev" to_table="professions" >
+				<fk_column name="professionid" pk="id" />
+			</fk>
+			<fk name="fk_professions_locale_professions_0" to_schema="saondev" to_table="professions" >
+				<fk_column name="variantchangesid" pk="variantchangesid" />
+			</fk>
+			<fk name="fk_professions_locale_professions_1" to_schema="saondev" to_table="professions" >
+				<fk_column name="descriptionid" pk="descriptionid" />
+			</fk>
+			<fk name="fk_professions_locale_professions_2" to_schema="saondev" to_table="professions" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+		</table>
 		<table name="properties" prior="traditions_0" >
 			<column name="id" type="integer" jt="4" mandatory="y" />
 			<column name="titlede" type="varchar" length="20" jt="12" />
@@ -386,6 +851,57 @@
 			<column name="titlede" type="varchar" length="30" jt="12" mandatory="y" />
 			<column name="titleen" type="varchar" length="30" jt="12" />
 			<index name="pk_ranges_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="rules" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="categoryid" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" prior="subcategoryid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" mandatory="y" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<column name="source" type="integer" jt="4" />
+			<index name="pk_rules_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_rules_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_rules_descriptionid" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<fk name="fk_rules_sources" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_rules_rulescategory" to_schema="saondev" to_table="rulescategory" >
+				<fk_column name="categoryid" pk="id" />
+			</fk>
+		</table>
+		<table name="rules_locale" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="ruleid" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="text" type="varchar" length="2000" jt="12" mandatory="y" />
+			<index name="pk_rules_locale_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_rules_locale_rules" to_schema="saondev" to_table="rules" >
+				<fk_column name="ruleid" pk="id" />
+			</fk>
+			<fk name="fk_rules_locale_rules_0" to_schema="saondev" to_table="rules" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_rules_locale_rules_1" to_schema="saondev" to_table="rules" >
+				<fk_column name="descriptionid" pk="descriptionid" />
+			</fk>
+		</table>
+		<table name="rulescategory" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="title" type="varchar" length="25" jt="12" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<index name="pk_rulescategory_id" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
 		</table>
@@ -542,6 +1058,88 @@
 				<fk_column name="titleid" pk="titleid" />
 			</fk>
 		</table>
+		<table name="specialabilities" prior="specials" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="source" type="integer" jt="4" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="active " type="boolean" jt="-7" >
+				<defo><![CDATA[false]]></defo>
+			</column>
+			<column name="categoryid" type="integer" jt="4" mandatory="y" />
+			<column name="subcategoryid" type="integer" jt="4" />
+			<column name="iscombatstyle" type="boolean" jt="-7" />
+			<column name="apvalue" type="integer" jt="4" mandatory="y" />
+			<column name="requiredattribute" type="integer" jt="4" />
+			<column name="requiredattributevalue" type="integer" jt="4" />
+			<column name="requiredskill" type="integer" jt="4" />
+			<column name="requiredskillvalue" type="integer" jt="4" />
+			<column name="requiredspecial" type="integer" jt="4" />
+			<column name="isnextlevelof" type="integer" jt="4" />
+			<column name="isspecial" type="boolean" jt="-7" />
+			<column name="requirmentid" type="integer" jt="4" />
+			<column name="requiredcombatskill" type="integer" jt="4" />
+			<column name="requiredcombatskillvalue" type="integer" jt="4" />
+			<index name="pk_specialabilities_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_specialabilities_titleid" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_specialabilities_descriptionid" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<index name="unq_specialabilities_requirmentid" unique="UNIQUE_KEY" >
+				<column name="requirmentid" />
+			</index>
+			<index name="unq_specialabilities_categoryid" unique="UNIQUE_KEY" >
+				<column name="categoryid" />
+			</index>
+			<index name="unq_specialabilities_subcategoryid" unique="UNIQUE_KEY" >
+				<column name="subcategoryid" />
+			</index>
+			<fk name="fk_specialabilities_coreattributes" to_schema="saondev" to_table="coreattributes" >
+				<fk_column name="requiredattribute" pk="id" />
+			</fk>
+			<fk name="fk_specialabilities_skills" to_schema="saondev" to_table="skills" >
+				<fk_column name="requiredskill" pk="id" />
+			</fk>
+			<fk name="fk_specialabilities_combatskills" to_schema="saondev" to_table="combatskills" >
+				<fk_column name="requiredcombatskill" pk="id" />
+			</fk>
+		</table>
+		<table name="specialabilities_locale" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="specialabilityid" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="requirmentid" type="integer" jt="4" />
+			<column name="categoryid" type="integer" jt="4" />
+			<column name="subcategoryid" type="integer" jt="4" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<index name="pk_specialabilities_locale_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_specialabilities_locale_specialabilities" to_schema="saondev" to_table="specialabilities" >
+				<fk_column name="specialabilityid" pk="id" />
+			</fk>
+			<fk name="fk_specialabilities_locale_specialabilities_0" to_schema="saondev" to_table="specialabilities" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+			<fk name="fk_specialabilities_locale_specialabilities_1" to_schema="saondev" to_table="specialabilities" >
+				<fk_column name="descriptionid" pk="descriptionid" />
+			</fk>
+			<fk name="fk_specialabilities_locale_specialabilities_2" to_schema="saondev" to_table="specialabilities" >
+				<fk_column name="requirmentid" pk="requirmentid" />
+			</fk>
+			<fk name="fk_specialabilities_locale_specialabilities_3" to_schema="saondev" to_table="specialabilities" >
+				<fk_column name="categoryid" pk="categoryid" />
+			</fk>
+			<fk name="fk_specialabilities_locale_specialabilities_4" to_schema="saondev" to_table="specialabilities" >
+				<fk_column name="subcategoryid" pk="subcategoryid" />
+			</fk>
+		</table>
 		<table name="species" prior="vantages_1" >
 			<column name="id" type="integer" jt="4" mandatory="y" >
 				<comment><![CDATA[unique]]></comment>
@@ -692,7 +1290,6 @@
 			</column>
 			<column name="titleid" type="integer" jt="4" mandatory="y" />
 			<column name="categoryid" type="integer" jt="4" mandatory="y" />
-			<column name="improvmentcost" type="varchar" length="1" jt="12" />
 			<column name="tags" type="varchar[]" jt="2003" />
 			<column name="effectid" type="integer" jt="4" />
 			<column name="spellid" type="integer" jt="4" mandatory="y" />
@@ -794,27 +1391,163 @@
 				<fk_column name="descirptionid" pk="descirptionid" />
 			</fk>
 		</table>
+		<table name="weaponreach" prior="tbl" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="title" prior="titleen" type="varchar" length="20" jt="12" />
+			<index name="pk_weaponreach_id" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+		</table>
+		<table name="weapons" prior="items_1" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" mandatory="y" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="weight" type="integer" jt="4" />
+			<column name="source" type="integer" jt="4" />
+			<column name="structurepoints" type="integer" jt="4" />
+			<column name="complexity" type="varchar" length="5" jt="12" />
+			<column name="price" type="varchar" jt="12" />
+			<column name="ruleid" type="integer" jt="4" />
+			<column name="category" type="integer" jt="4" />
+			<column name="combatskill" type="integer" jt="4" />
+			<column name="attackmod" type="integer" jt="4" />
+			<column name="parrymod" type="integer" jt="4" />
+			<column name="extratp" type="integer" jt="4" />
+			<column name="numberofdice" type="integer" jt="4" />
+			<column name="leadattribute" type="integer[]" jt="2003" />
+			<column name="leadattributevalue" type="integer" jt="4" />
+			<column name="reach" prior="range" type="integer" jt="4" />
+			<column name="length" type="integer" jt="4" />
+			<column name="noteid" type="integer" length="600" jt="4" />
+			<column name="advantageid" type="integer" jt="4" />
+			<column name="disadvantageid" type="integer" jt="4" />
+			<column name="tags" type="varchar[]" jt="2003" />
+			<index name="pk_items_id_1" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_items_titleid_0" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_items_descriptionid_0" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<index name="unq_items_ruleid_0" unique="UNIQUE_KEY" >
+				<column name="ruleid" />
+			</index>
+			<index name="unq_items_category_0" unique="UNIQUE_KEY" >
+				<column name="category" />
+			</index>
+			<index name="unq_weapons_advantageid" unique="UNIQUE_KEY" >
+				<column name="advantageid" />
+			</index>
+			<index name="unq_weapons_disadvantageid" unique="UNIQUE_KEY" >
+				<column name="disadvantageid" />
+			</index>
+			<index name="unq_weapons_noteid" unique="UNIQUE_KEY" >
+				<column name="noteid" />
+			</index>
+			<fk name="fk_items_sources_0" to_schema="saondev" to_table="sources" >
+				<fk_column name="source" pk="id" />
+			</fk>
+			<fk name="fk_weapons_combatskills" to_schema="saondev" to_table="combatskills" >
+				<fk_column name="combatskill" pk="id" />
+			</fk>
+			<fk name="fk_weapons_weaponreach" to_schema="saondev" to_table="weaponreach" >
+				<fk_column name="reach" pk="id" />
+			</fk>
+		</table>
+		<table name="weapons_locale" prior="weapons_0" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="titleid" type="integer" jt="4" />
+			<column name="descriptionid" type="integer" jt="4" />
+			<column name="ruleid" type="integer" jt="4" />
+			<column name="category" type="integer" jt="4" />
+			<column name="noteid" type="integer" length="600" jt="4" />
+			<column name="advantageid" type="integer" jt="4" />
+			<column name="disadvantageid" type="integer" jt="4" />
+			<column name="weaponid" type="integer" jt="4" mandatory="y" />
+			<column name="text" type="varchar" length="1000" jt="12" mandatory="y" />
+			<column name="locale" type="varchar" length="2" jt="12" mandatory="y" />
+			<index name="pk_items_id_2" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="unq_items_titleid_1" unique="UNIQUE_KEY" >
+				<column name="titleid" />
+			</index>
+			<index name="unq_items_descriptionid_1" unique="UNIQUE_KEY" >
+				<column name="descriptionid" />
+			</index>
+			<index name="unq_items_ruleid_1" unique="UNIQUE_KEY" >
+				<column name="ruleid" />
+			</index>
+			<index name="unq_items_category_1" unique="UNIQUE_KEY" >
+				<column name="category" />
+			</index>
+			<fk name="fk_weapons_0_weapons" to_schema="saondev" to_table="weapons" >
+				<fk_column name="weaponid" pk="id" />
+			</fk>
+			<fk name="fk_weapons_0_weapons_0" to_schema="saondev" to_table="weapons" >
+				<fk_column name="advantageid" pk="advantageid" />
+			</fk>
+			<fk name="fk_weapons_0_weapons_1" to_schema="saondev" to_table="weapons" >
+				<fk_column name="disadvantageid" pk="disadvantageid" />
+			</fk>
+			<fk name="fk_weapons_0_weapons_2" to_schema="saondev" to_table="weapons" >
+				<fk_column name="noteid" pk="noteid" />
+			</fk>
+			<fk name="fk_weapons_0_weapons_3" to_schema="saondev" to_table="weapons" >
+				<fk_column name="category" pk="category" />
+			</fk>
+			<fk name="fk_weapons_0_weapons_4" to_schema="saondev" to_table="weapons" >
+				<fk_column name="ruleid" pk="ruleid" />
+			</fk>
+			<fk name="fk_weapons_0_weapons_5" to_schema="saondev" to_table="weapons" >
+				<fk_column name="descriptionid" pk="descriptionid" />
+			</fk>
+			<fk name="fk_weapons_0_weapons_6" to_schema="saondev" to_table="weapons" >
+				<fk_column name="titleid" pk="titleid" />
+			</fk>
+		</table>
 	</schema>
 	<layout name="Layout" id="Layout_1741" show_relation="columns" >
+		<entity schema="saondev" name="armour" color="C1D8EE" x="2224" y="880" />
+		<entity schema="saondev" name="armour_locale" color="3986C1" x="2544" y="880" />
+		<entity schema="saondev" name="blessings" color="C1D8EE" x="1616" y="1152" />
+		<entity schema="saondev" name="blessings_locale" color="C1D8EE" x="1792" y="1152" />
 		<entity schema="saondev" name="book" color="C1D8EE" x="48" y="224" />
 		<entity schema="saondev" name="book_locale" color="3986C1" x="272" y="224" />
+		<entity schema="saondev" name="combatskills" color="C1D8EE" x="352" y="1360" />
+		<entity schema="saondev" name="combatskills_locale" color="C1D8EE" x="112" y="1360" />
 		<entity schema="saondev" name="coreattributes" color="C1D8EE" x="464" y="608" />
+		<entity schema="saondev" name="culturepackages" color="C1D8EE" x="1360" y="1104" />
 		<entity schema="saondev" name="cultures" color="3986C1" x="1120" y="912" />
 		<entity schema="saondev" name="cultures_locale" color="3986C1" x="1344" y="928" />
 		<entity schema="saondev" name="durations" color="C1D8EE" x="1120" y="672" />
-		<entity schema="saondev" name="enhancements" color="C1D8EE" x="1632" y="544" />
-		<entity schema="saondev" name="enhancements_locale" color="C1D8EE" x="1824" y="544" />
+		<entity schema="saondev" name="enhancements" color="C1D8EE" x="1664" y="512" />
+		<entity schema="saondev" name="enhancements_locale" color="C1D8EE" x="1856" y="512" />
+		<entity schema="saondev" name="gods" color="3986C1" x="1568" y="896" />
+		<entity schema="saondev" name="items" color="C1D8EE" x="2112" y="176" />
+		<entity schema="saondev" name="items_locale" color="3986C1" x="2288" y="176" />
 		<entity schema="saondev" name="languages" color="C1D8EE" x="656" y="624" />
+		<entity schema="saondev" name="liturgy" color="3986C1" x="1776" y="736" />
+		<entity schema="saondev" name="liturgy_locale" color="3986C1" x="2016" y="768" />
 		<entity schema="saondev" name="magicalacts" color="3986C1" x="1552" y="96" />
 		<entity schema="saondev" name="magicalacts_locale" color="3986C1" x="1760" y="112" />
 		<entity schema="saondev" name="magicaltricks" color="3986C1" x="656" y="80" />
 		<entity schema="saondev" name="magicaltricks_locale" color="C1D8EE" x="464" y="80" />
+		<entity schema="saondev" name="professions" color="C1D8EE" x="752" y="1312" />
+		<entity schema="saondev" name="professions_locale" color="C1D8EE" x="1040" y="1328" />
 		<entity schema="saondev" name="properties" color="3986C1" x="1376" y="656" />
 		<entity schema="saondev" name="ranges" color="C1D8EE" x="1104" y="576" />
+		<entity schema="saondev" name="rules" color="C1D8EE" x="656" y="384" />
+		<entity schema="saondev" name="rules_locale" color="C1D8EE" x="800" y="384" />
+		<entity schema="saondev" name="rulescategory" color="C1D8EE" x="896" y="288" />
 		<entity schema="saondev" name="skills" color="3986C1" x="96" y="880" />
 		<entity schema="saondev" name="skills_locale" color="3986C1" x="352" y="960" />
 		<entity schema="saondev" name="socialstatus" color="C1D8EE" x="832" y="608" />
 		<entity schema="saondev" name="sources" color="C1D8EE" x="480" y="384" />
+		<entity schema="saondev" name="specialabilities" color="C1D8EE" x="1376" y="1424" />
+		<entity schema="saondev" name="specialabilities_locale" color="C1D8EE" x="1648" y="1424" />
 		<entity schema="saondev" name="species" color="3986C1" x="640" y="896" />
 		<entity schema="saondev" name="species_locale" color="3986C1" x="928" y="928" />
 		<entity schema="saondev" name="spells" color="3986C1" x="1040" y="128" />
@@ -823,6 +1556,9 @@
 		<entity schema="saondev" name="traditions" color="3986C1" x="960" y="576" />
 		<entity schema="saondev" name="vantages" color="C4EEC1" x="64" y="544" />
 		<entity schema="saondev" name="vantages_locale" color="3986C1" x="256" y="544" />
+		<entity schema="saondev" name="weaponreach" color="C1D8EE" x="1984" y="384" />
+		<entity schema="saondev" name="weapons" color="3986C1" x="2144" y="400" />
+		<entity schema="saondev" name="weapons_locale" color="3986C1" x="2352" y="400" />
 		<group name="Group_advantage" color="C4E0F9" >
 			<entity schema="saondev" name="vantages_locale" />
 			<entity schema="saondev" name="vantages" />
@@ -842,6 +1578,7 @@
 		<group name="Group_culture" color="C4E0F9" >
 			<entity schema="saondev" name="cultures" />
 			<entity schema="saondev" name="cultures_locale" />
+			<entity schema="saondev" name="culturepackages" />
 		</group>
 		<group name="Group_tables_with_translastionswithin" color="C4E0F9" >
 			<entity schema="saondev" name="coreattributes" />
@@ -868,6 +1605,27 @@
 		<group name="Group_enhancements" color="C4E0F9" >
 			<entity schema="saondev" name="enhancements" />
 			<entity schema="saondev" name="enhancements_locale" />
+		</group>
+		<group name="Group_blessings" color="C4E0F9" >
+			<entity schema="saondev" name="blessings" />
+			<entity schema="saondev" name="blessings_locale" />
+		</group>
+		<group name="Group_liturgy" color="C4E0F9" >
+			<entity schema="saondev" name="liturgy" />
+			<entity schema="saondev" name="liturgy_locale" />
+		</group>
+		<group name="Group_combatskills" color="C4E0F9" >
+			<entity schema="saondev" name="combatskills" />
+			<entity schema="saondev" name="combatskills_locale" />
+		</group>
+		<group name="Group_professions" color="C4E0F9" >
+			<entity schema="saondev" name="professions" />
+			<entity schema="saondev" name="professions_locale" />
+		</group>
+		<group name="Group_rules" color="C4E0F9" >
+			<entity schema="saondev" name="rules" />
+			<entity schema="saondev" name="rules_locale" />
+			<entity schema="saondev" name="rulescategory" />
 		</group>
 	</layout>
 </project>
