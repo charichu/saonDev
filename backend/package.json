@@ -24,6 +24,7 @@
     "reflect-metadata": "^0.1.10",
     "sqlite3": "^4.1.0",
     "type-graphql": "^0.17.5",
+    "type-graphql-dataloader": "^0.3.7",
     "typeorm": "0.2.20"
   },
   "scripts": {

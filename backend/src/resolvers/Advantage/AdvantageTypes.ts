@@ -1,42 +1,42 @@
-import { AdvantageOutput } from '../../resolvers/Advantage/AdvantageTypes';
 import { Field, Int, ObjectType } from 'type-graphql';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Advantage extends BaseEntity{
+export class AdvantageOutput {
     @Field( () => Int)
-    @PrimaryGeneratedColumn()
     id: number
 
     @Field(() => Int)
-    @Column({nullable: true})
     rank: number
 
     @Field(() => Int)
-    @Column({nullable: true})
     stage: number
 
     @Field(() => Int)
-    @Column()
     cost: number
     
     @Field(() => Int)
-    @Column()
     source: number
 
-    @Field(() => Int)
-    @Column({nullable: true})
+    @Field(() => Int, {nullable: true})
     requirementId: number
 
     @Field(() => AdvantageOutput, {nullable: true})
     requiredAdvantage: AdvantageOutput
 
     @Field(() => Int)
-    @Column()
     titleId: number
 
+    @Field(() => String)
+    title: string
+
     @Field(() => Int)
-    @Column()
     descriptionId: number
+
+    @Field(() => String)
+    description: string
+
+    @Field(() => String)
+    locale: string
 }

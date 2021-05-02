@@ -10,6 +10,7 @@ import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 //@ts-ignore
 import * as dotenv from 'dotenv';
+import { AdvantageResolver } from "./resolvers/Advantage/AdvantageResolver";
 
 dotenv.config();
 
@@ -36,7 +37,7 @@ credentialsRequired: false
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [BookResolver], 
+      resolvers: [BookResolver, AdvantageResolver], 
       authChecker: ({ context: {user} }, roles) => {
         // if `@Authorized()`, check only if user exists
         if(roles.length === 0){
@@ -57,7 +58,12 @@ credentialsRequired: false
       }, 
       authMode: "error",
     }),
-  context: ({req}: any) => { const user = req.user; return {user}} ,
+  context: ({req}: any) => { const user = req.user; return {user}},
+  // plugins: [
+  //   ApolloServerLoaderPlugin({
+  //     typeormGetConnection: getConnection, // for use with TypeORM and DataLoader
+  //   })
+  // ]
 });
 
   apolloServer.applyMiddleware({ app, cors: false });

@@ -9,14 +9,14 @@ export enum Locale {
 
 @ObjectType()
 @Entity()
-export class DisadvantageLocale extends BaseEntity{
+export class Locales extends BaseEntity{
     @Field( () => Int)
     @PrimaryGeneratedColumn()
     id: number
     
     @Field( () => Int)
     @Column()
-    advantageid: number
+    objectid: number
 
     @Field( () => Int)
     @Column()
