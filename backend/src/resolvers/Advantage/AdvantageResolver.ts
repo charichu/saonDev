@@ -87,7 +87,7 @@ export class AdvantageResolver {
             stage: stage,
             cost: cost,
             source: source,
-            requirementId: requirementId,
+            requirementId: requirementId
         };
 
         const newAdvantage = await Advantage.create(input).save();
@@ -140,9 +140,109 @@ export class AdvantageResolver {
         return true;
     }
     
-    //TODO
     //UPDATE LOCALES
+    @Authorized("ADMIN")
+    @Mutation(() => Boolean, { nullable: true })
+    async updateTextForAdvantage(
+        @Arg("advantageId") advantageId: number,
+        @Arg("locale", {defaultValue: Locale.de} ) locale: Locale,
+        @Arg("text") text: string,
+        @Arg("isTitle") isTitle: boolean
+        ) {
+        const textId = (isTitle) ? (prefixTitle + advantageId) : (prefixDescription + advantageId)
+        
+        Locales.update({objectid: advantageId, textId: textId, locale: locale}, {text: text});
+
+        return true;
+    }
+    @Authorized("ADMIN")
+    @Mutation(() => Boolean, { nullable: true })
+    async updateTextByTextId(
+        @Arg("id") id: number,
+        @Arg("text") text: string,
+        @Arg("locale", {defaultValue: Locale.de} ) locale: Locale
+        ) {
+
+        Locales.update({textId: id, locale: locale}, {text: text});
+
+        return true;
+    }
+
     //UPDATE ADVANTAGE
-    //QUERY ADVANTAGE BY NAME WITH FUZZY
-    //IMPLEMENT ABOVE QUERY TO CREATE/UPDATE ADVANTAGE FOR REQUIREDADVANTAGE
+    @Authorized("ADMIN")
+    @Mutation(() => Boolean, { nullable: true })
+    async updateAdvantageById(
+        @Arg("advantageId") advantageId: number,
+        @Arg("locale", {defaultValue: Locale.de} ) locale: Locale,
+        @Arg("title") title: string,
+        @Arg("description") description: string,
+        @Arg("cost") cost: number,
+        @Arg("rank") rank: number,
+        @Arg("stage") stage: number,
+        @Arg("source") source: number,
+        @Arg("requirementId") requirementId: number
+        ) {
+
+        const advantage = await Advantage.findOne({where: {id: advantageId}});
+
+        if(!advantage){
+            return false;
+        }
+
+        const input = {
+            cost: cost || advantage.cost,
+            rank: rank || advantage.rank,
+            stage: stage || advantage.stage,
+            source: source || advantage.source,
+            requirementId: requirementId || advantage.requirementId
+        }
+
+        Advantage.update({id: advantageId}, input);
+
+        if(title){            
+            this.updateTextByTextId(advantage.titleId, title, locale);
+        }
+
+        if(description){            
+            this.updateTextByTextId(advantage.descriptionId, description, locale);
+        }
+
+        return true;
+    }
+
+    //QUERY LOCALE TEXT BY ID
+    @Query(() => Locales, {nullable: true})
+    localeById(
+        @Arg("id") id: number
+    ) {
+        let output = Locales.findOne({where: {id: id}});
+        return output ? output : null;
+    } 
+    
+    //QUERY LOCALE TEXT BY ID
+    @Query(() => [Locales], {nullable: true})
+    localeByAdvantageId(
+        @Arg("advantageId") advantageId: number,
+        @Arg("locale", {defaultValue: Locale.de} ) locale: Locale
+    ) {
+        const titleId = prefixTitle + advantageId;
+        const descriptionId = prefixDescription + advantageId;
+        let output = [
+            Locales.findOne({where: {objectid: advantageId, textId: titleId, locale: locale }}),
+            Locales.findOne({where: {objectid: advantageId, textId: descriptionId, locale: locale }})
+        ]
+        return output ? output : null;
+    } 
+
+    //QUERY ADVANTAGE BY NAME
+    @Query(() => AdvantageOutput, {nullable: true})
+    async advantageByTitle(
+        @Arg("title") title: string,
+    ) {
+        const locale = await Locales.findOne({where: {text: title}});
+        
+        return (locale) ? this.advantageById(locale.objectid) : null;
+    } 
+    //TODO 
+    // Add FUZZY SEARCH FOR TITLE    
 }
