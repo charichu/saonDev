@@ -1,42 +1,42 @@
-import { DisadvantageOutput } from '../../resolvers/Disadvantage/DisadvantageTypes';
 import { Field, Int, ObjectType } from 'type-graphql';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Disadvantage extends BaseEntity{
+export class DisadvantageOutput {
     @Field( () => Int)
-    @PrimaryGeneratedColumn()
     id: number
 
     @Field(() => Int)
-    @Column({nullable: true})
     rank: number
 
     @Field(() => Int)
-    @Column({nullable: true})
     stage: number
 
     @Field(() => Int)
-    @Column()
     cost: number
     
     @Field(() => Int)
-    @Column()
     source: number
 
-    @Field(() => Int)
-    @Column({nullable: true})
+    @Field(() => Int, {nullable: true})
     requirementId: number
 
     @Field(() => DisadvantageOutput, {nullable: true})
     requiredAdvantage: DisadvantageOutput
 
     @Field(() => Int)
-    @Column()
     titleId: number
 
+    @Field(() => String)
+    title: string
+
     @Field(() => Int)
-    @Column()
     descriptionId: number
+
+    @Field(() => String)
+    description: string
+
+    @Field(() => String)
+    locale: string
 }

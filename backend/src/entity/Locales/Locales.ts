@@ -7,6 +7,11 @@ export enum Locale {
     en = 'en'
 }
 
+export enum TableName { 
+    advantages = 'Vorteile',
+    disadvantages = 'Nachteile'
+}
+
 @ObjectType()
 @Entity()
 export class Locales extends BaseEntity{
@@ -29,4 +34,8 @@ export class Locales extends BaseEntity{
     @Field()
     @Column()
     text: string
+    
+    @Field()
+    @Column({enum: TableName, nullable: true})
+    table: string
 }

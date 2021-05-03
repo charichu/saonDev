@@ -33,10 +33,10 @@ export class Advantage extends BaseEntity{
     requiredAdvantage: AdvantageOutput
 
     @Field(() => Int)
-    @Column()
+    @Column({nullable: true})
     titleId: number
 
     @Field(() => Int)
-    @Column()
+    @Column({nullable: true})
     descriptionId: number
 }
